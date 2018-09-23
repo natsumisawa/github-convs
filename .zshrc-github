@@ -1,5 +1,4 @@
 # checkout local
-
 git-checkout(){
   # instead \r
   LF=$'\\\x0A'
