@@ -23,7 +23,7 @@ git-add-commit(){
 }
 
 # add commit for hrmos
-hr-add-commit(){
+git-hr-add-commit(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
@@ -35,8 +35,8 @@ hr-add-commit(){
   git commit -m $JIRA_NO" "$MSG
 }
 
-# pull base brach
-git-pull-base(){
+# pull from base brach
+git-pull(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | uniq | fzf --prompt="BASE_BRANCH > ")
