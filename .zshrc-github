@@ -1,7 +1,24 @@
 # checkout local
 git-checkout(){
-  BRANCH=$(git branch -vv | grep -v "^*" | awk '{print $1}' | fzf +m --prompt="LOCAL_BRANCHES > ")
-  git checkout $BRANCH
+  # instead \r
+  LF=$'\\\x0A'
+  echo "\U1F34E git fetch"
+  git fetch
+  echo "\U1F34E git checkout"
+  BRANCH=$(git branch -vv | grep -v "^*" | awk '{print $1}' | sed '1s/^/CREATE NEW BRANCH'"$LF"'/' | fzf +m --prompt="LOCAL_BRANCHES > ")
+  if [ $BRANCH  = "CREATE NEW BRANCH" ]; then
+    echo "\U1F4DD branch name"
+    read NEW
+    git checkout -b $NEW
+  else
+    MSG=$(git checkout $BRANCH 2>&1)
+    if [[ $MSG = "error"* ]]; then
+      echo "\U1F41B "$MSG
+    else
+      echo "\U1F34E git pull from "$BRANCH
+      git pull origin $BRANCH
+    fi
+  fi
 }
 
 # checkout including remote branches, sorted by most recent commit, limit 30 last branches
@@ -17,7 +34,7 @@ git-add-commit(){
   git add $(echo $FILES | awk '{print $2}')
   echo "\U1F34E git add"
   echo $FILES
-  echo "\U1F4DD write commit message..."  
+  echo "\U1F4DD commit message > "  
   read MSG
   git commit -m $MSG
 }
@@ -30,7 +47,7 @@ git-hr-add-commit(){
   echo "\U1F34E git add"
   echo $FILES
   JIRA_NO=$(git branch | grep "*" | grep -o "SBATS-[0-9]*")
-  echo "\U1F4DD write commit message after "$JIRA_NO"..."
+  echo "\U1F4DD commit message after "$JIRA_NO" > "
   read MSG
   git commit -m $JIRA_NO" "$MSG
 }
