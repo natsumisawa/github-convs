@@ -1,17 +1,17 @@
-# checkout git branch
+# checkout local
 git-checkout(){
   BRANCH=$(git branch -vv | fzf +m --prompt="LOCAL_BRANCHES > ")
   git checkout $(echo $BRANCH | awk '{print $2}')
 }
 
-# checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+# checkout including remote branches, sorted by most recent commit, limit 30 last branches
 git-checkout-remote(){
   BRANCH=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)"| fzf -d $(wc -l <<< $(git branch --all | grep -v HEAD)) +m)
   git checkout $(echo $BRANCH | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
-# add and commit
-git-commit(){
+# add commit
+git-add-commit(){
   FILES=$(git status --short | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
   echo "\U1F34E git add"
