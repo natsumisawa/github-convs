@@ -1,7 +1,12 @@
 # checkout local
 git-checkout(){
+  echo "\U1F34E git fetch"
+  git fetch
+  echo "\U1F34E git checkout"
   BRANCH=$(git branch -vv | grep -v "^*" | awk '{print $1}' | fzf +m --prompt="LOCAL_BRANCHES > ")
   git checkout $BRANCH
+  echo "\U1F34E git pull from "$BRANCH
+  git pull origin $BRANCH
 }
 
 # checkout including remote branches, sorted by most recent commit, limit 30 last branches
