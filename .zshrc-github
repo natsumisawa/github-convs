@@ -22,8 +22,8 @@ git-add-commit(){
   git commit -m $MSG
 }
 
-# add commit
-git-add-commit-for-hrmos(){
+# add commit for hrmos
+hr-add-commit(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
@@ -32,14 +32,14 @@ git-add-commit-for-hrmos(){
   JIRA_NO=$(git branch | grep "*" | awk '{print $2}' | awk -F "_" '{print $1}')
   echo "\U1F4DD write commit message after "$JIRA_NO"..."
   read MSG
-  git commit -m $JIRA_NO$MSG
+  git commit -m $JIRA_NO" "$MSG
 }
 
 # pull base brach
 git-pull-base(){
   LF=$'\\\x0A'
-  CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}' | sed '1s/^/develop'"$LF"'/' | fzf --prompt="WHICH_BRANCH >")
-  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}'| uniq | fzf --prompt="BASE_BRANCH > ")
+  CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
+  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | uniq | fzf --prompt="BASE_BRANCH > ")
   echo "\U1F34E ---<<< start git pull from "$BASE_BRANCH"..."
   git pull origin $BASE_BRANCH
 }
