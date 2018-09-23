@@ -1,0 +1,30 @@
+# checkout git branch
+git-checkout(){
+  BRANCH=$(git branch -vv | fzf +m --prompt="LOCAL_BRANCHES > ")
+  git checkout $(echo $BRANCH | awk '{print $2}')
+}
+
+# checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+git-checkout-remote(){
+  BRANCH=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)"| fzf -d $(wc -l <<< $(git branch --all | grep -v HEAD)) +m)
+  git checkout $(echo $BRANCH | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+# add and commit
+git-commit(){
+  FILES=$(git status --short | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
+  git add $(echo $FILES | awk '{print $2}')
+  echo "\U1F34E git add"
+  echo $FILES
+  echo "\U1F4DD write commit message ..."  
+  read MSG
+  git commit -m $MSG
+}
+
+# pull base brach
+git-pull-base(){
+  CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
+  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}'| uniq | fzf --prompt="BASE_BRANCH > ")
+  echo "------------> git pull from "$BASE_BRANCH
+  git pull origin $BASE_BRANCH
+}
