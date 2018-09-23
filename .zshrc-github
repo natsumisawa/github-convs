@@ -6,14 +6,18 @@ git-checkout(){
   git fetch
   echo "\U1F34E git checkout"
   BRANCH=$(git branch -vv | grep -v "^*" | awk '{print $1}' | sed '1s/^/CREATE NEW BRANCH'"$LF"'/' | fzf +m --prompt="LOCAL_BRANCHES > ")
-  if [ $BRANCH="CREATE NEW BRANCH" ] ; then
-    echo "\U1F4DD branch name after SBATS-"
+  if [ $BRANCH  = "CREATE NEW BRANCH" ]; then
+    echo "\U1F4DD branch name"
     read NEW
-    git checkout -b $NEW
   else
     git checkout $BRANCH
-    echo "\U1F34E git pull from "$BRANCH
-    git pull origin $BRANCH
+    MSG=$(git checkout -b $NEW 2>&1)
+    if [[ $MSG = "error"* ]]; then
+      echo "\U1F41B checkout error"
+    else
+      echo "\U1F34E git pull from "$BRANCH
+      git pull origin $BRANCH
+    fi
   fi
 }
 
