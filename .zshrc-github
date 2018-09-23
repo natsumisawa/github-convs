@@ -16,7 +16,7 @@ git-commit(){
   git add $(echo $FILES | awk '{print $2}')
   echo "\U1F34E git add"
   echo $FILES
-  echo "\U1F4DD write commit message ..."  
+  echo "\U1F4DD write commit message..."  
   read MSG
   git commit -m $MSG
 }
@@ -27,4 +27,11 @@ git-pull-base(){
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}'| uniq | fzf --prompt="BASE_BRANCH > ")
   echo "------------> git pull from "$BASE_BRANCH
   git pull origin $BASE_BRANCH
+}
+
+# push
+git-push(){
+  BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
+  echo "\U1F34E start git push to origin/"$BRANCH"..." 
+  git push origin $BRANCH
 }
