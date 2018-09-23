@@ -11,12 +11,9 @@ git-checkout(){
     read NEW
     git checkout -b $NEW
   else
-    git checkout $BRANCH
+    git checkout $BRANCH && "\U1F34E git pull from "$BRANCH | git pull origin $BRANCH
     STATUS=$?
-    if [ $STATUS -eq 0 ]; then
-      echo "\U1F34E git pull from "$BRANCH
-      git pull origin $BRANCH
-    else
+    if [ $STATUS -ne 0 ]; then
       echo "\U1F41B exit-status: "$STATUS
     fi
   fi
