@@ -1,4 +1,7 @@
 # checkout local
+
+echo "test"
+
 git-checkout(){
   # instead \r
   LF=$'\\\x0A'
@@ -12,10 +15,6 @@ git-checkout(){
     git checkout -b $NEW
   else
     git checkout $BRANCH && "\U1F34E git pull from "$BRANCH | git pull origin $BRANCH
-    STATUS=$?
-    if [ $STATUS -ne 0 ]; then
-      echo "\U1F41B exit-status: "$STATUS
-    fi
   fi
 }
 
