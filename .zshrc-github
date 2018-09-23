@@ -9,11 +9,11 @@ git-checkout(){
   if [ $BRANCH  = "CREATE NEW BRANCH" ]; then
     echo "\U1F4DD branch name"
     read NEW
+    git checkout -b $NEW
   else
-    git checkout $BRANCH
-    MSG=$(git checkout -b $NEW 2>&1)
+    MSG=$(git checkout $BRANCH 2>&1)
     if [[ $MSG = "error"* ]]; then
-      echo "\U1F41B checkout error"
+      echo "\U1F41B "$MSG
     else
       echo "\U1F34E git pull from "$BRANCH
       git pull origin $BRANCH
