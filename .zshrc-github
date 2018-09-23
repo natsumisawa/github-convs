@@ -1,4 +1,5 @@
 # checkout local
+
 git-checkout(){
   # instead \r
   LF=$'\\\x0A'
@@ -11,12 +12,13 @@ git-checkout(){
     read NEW
     git checkout -b $NEW
   else
-    MSG=$(git checkout $BRANCH 2>&1)
-    if [[ $MSG = "error"* ]]; then
-      echo "\U1F41B "$MSG
-    else
+    git checkout $BRANCH
+    STATUS=$?
+    if [ $STATUS -eq 0 ]; then
       echo "\U1F34E git pull from "$BRANCH
       git pull origin $BRANCH
+    else
+      echo "\U1F41B exit-status: "$STATUS
     fi
   fi
 }
