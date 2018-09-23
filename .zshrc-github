@@ -29,7 +29,7 @@ git-hr-add-commit(){
   git add $(echo $FILES | awk '{print $2}')
   echo "\U1F34E git add"
   echo $FILES
-  JIRA_NO=$(git branch | grep "*" | grep -o "SBATS-[0-9]*" | awk -F "_" '{print $1}')
+  JIRA_NO=$(git branch | grep "*" | grep -o "SBATS-[0-9]*")
   echo "\U1F4DD write commit message after "$JIRA_NO"..."
   read MSG
   git commit -m $JIRA_NO" "$MSG
