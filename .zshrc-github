@@ -1,7 +1,7 @@
 # checkout local
 git-checkout(){
-  BRANCH=$(git branch -vv | fzf +m --prompt="LOCAL_BRANCHES > ")
-  git checkout $(echo $BRANCH | awk '{print $2}')
+  BRANCH=$(git branch -vv | grep -v "^*" | awk '{print $1}' | fzf +m --prompt="LOCAL_BRANCHES > ")
+  git checkout $BRANCH
 }
 
 # checkout including remote branches, sorted by most recent commit, limit 30 last branches
