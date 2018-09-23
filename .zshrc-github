@@ -23,7 +23,7 @@ git-add-commit(){
 }
 
 # add commit for hrmos
-hr-add-commit(){
+git-hr-add-commit(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
