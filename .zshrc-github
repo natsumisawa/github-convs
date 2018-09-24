@@ -5,13 +5,14 @@ git-checkout(){
   echo "\U1F34E git fetch"
   git fetch
   echo "\U1F34E git checkout"
-  BRANCH=$(git branch -vv | grep -v "^*" | awk '{print $1}' | sed '1s/^/CREATE NEW BRANCH'"$LF"'/' | fzf +m --prompt="LOCAL_BRANCHES > ")
-  if [ $BRANCH  = "CREATE NEW BRANCH" ]; then
+  BRANCH=$(git branch -vv | grep -v "^*" | sed '1s/^/* CREATE NEW BRANCH'"$LF"'/' | fzf +m --prompt="LOCAL_BRANCHES > ")
+  if [ $BRANCH  = "* CREATE NEW BRANCH" ]; then
     echo "\U1F4DD branch name"
     read NEW
     git checkout -b $NEW
   else
-    git checkout $BRANCH && "\U1F34E git pull from "$BRANCH | git pull origin $BRANCH
+    BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
+    git checkout $BRANCH_NAME && echo "\U1F34E git pull from "$BRANCH_NAME && git pull origin $BRANCH_NAME
   fi
 }
 
