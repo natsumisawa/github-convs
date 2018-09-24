@@ -1,5 +1,5 @@
 # github-convs
-zsh便利コマンド集
+github便利コマンド集
 
 ~/.zshrc
 ```
