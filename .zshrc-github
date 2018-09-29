@@ -16,10 +16,11 @@ git-checkout(){
   fi
 }
 
-# checkout including remote branches, sorted by most recent commit, limit 30 last branches
+# checkout including remote branches
 git-checkout-remote(){
-  BRANCH=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)"| fzf -d $(wc -l <<< $(git branch --all | grep -v HEAD)) +m)
-  git checkout $(echo $BRANCH | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+  BRANCH=$(git branch -a | grep remotes/origin/SBATS | awk -F/ '{print $3}' | fzf +m --prompt="BRANCHES > ")
+  echo "\U1F34E git checkout"
+  git checkout -b $BRANCH origin/$BRANCH
 }
 
 # add commit
