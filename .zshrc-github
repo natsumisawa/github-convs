@@ -18,6 +18,8 @@ git-checkout(){
 
 # checkout including remote branches
 git-checkout-remote(){
+  echo "\U1F34E git fetch"
+  git fetch
   BRANCH=$(git branch -a | grep remotes/origin/SBATS | awk -F/ '{print $3}' | fzf +m --prompt="BRANCHES > ")
   echo "\U1F34E git checkout"
   git checkout -b $BRANCH origin/$BRANCH
