@@ -34,8 +34,9 @@ git-ch-remote(){
 git-ad-cm(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ") 
-  echo "\U1F34E git add"
+  echo "\U1F359 git add"
   git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
+    git diff --cached && \
     echo "\U1F4DD commit message > " && read MSG && git commit -m $MSG
 }
 
@@ -75,6 +76,5 @@ git-alias(){
 
 # check emoji unicode
 emoji-uni(){
-  code=$(cat emoji-cheet | sed 's/U+/\"\\U/g' | awk -F\" '{print $2}' | awk 'NF')
-  echo $code
+  cat emoji-unicode | fzf -m
 }
