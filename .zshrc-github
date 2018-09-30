@@ -72,3 +72,9 @@ git-psh(){
 git-alias(){
   cat ~/.zshrc | grep "alias" | grep "git " | awk -F"alias " '{print $2}'
 } 
+
+# check emoji unicode
+emoji-uni(){
+  code=$(cat emoji-cheet | sed 's/U+/\"\\U/g' | awk -F\" '{print $2}' | awk 'NF')
+  echo $code
+}

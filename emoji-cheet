@@ -1,0 +1,166 @@
+:hash	hash	 	U+0023 U+20E3
+:zero	zero	 	U+0030 U+20E3
+:one	one	 	U+0031 U+20E3
+:two	two	 	U+0032 U+20E3
+:three	three	 	U+0033 U+20E3
+:four	four	 	U+0034 U+20E3
+:five	five	 	U+0035 U+20E3
+:six	six	 	U+0036 U+20E3
+:seven	seven	 	U+0037 U+20E3
+:eight	eight	 	U+0038 U+20E3
+:nine	nine	 	U+0039 U+20E3
+:copyright	copyright	 	U+00A9
+:registered	registered	 	U+00AE
+:bangbang	bangbang	 	U+203C
+:interrobang	interrobang	 	U+2049
+:tm	tm	 	U+2122
+:information_source	information_source	 	U+2139
+:left_right_arrow	left_right_arrow	 	U+2194
+:arrow_up_down	arrow_up_down	 	U+2195
+:arrow_upper_left	arrow_upper_left	 	U+2196
+:arrow_upper_right	arrow_upper_right	 	U+2197
+:arrow_lower_right	arrow_lower_right	 	U+2198
+:arrow_lower_left	arrow_lower_left	 	U+2199
+:leftwards_arrow_with_hook	leftwards_arrow_with_hook	 	U+21A9
+:arrow_right_hook	arrow_right_hook	 	U+21AA
+:watch	watch	 	U+231A
+:hourglass	hourglass	 	U+231B
+:fast_forward	fast_forward	 	U+23E9
+:rewind	rewind	 	U+23EA
+:arrow_double_up	arrow_double_up	 	U+23EB
+:arrow_double_down	arrow_double_down	 	U+23EC
+:alarm_clock	alarm_clock	 	U+23F0
+:hourglass_flowing_sand	hourglass_flowing_sand	 	U+23F3
+:m	m	 	U+24C2
+:black_small_square	black_small_square	 	U+25AA
+:white_small_square	white_small_square	 	U+25AB
+:arrow_forward	arrow_forward	 	U+25B6
+:arrow_backward	arrow_backward	 	U+25C0
+:white_medium_square	white_medium_square	 	U+25FB
+:black_medium_square	black_medium_square	 	U+25FC
+:white_medium_small_square	white_medium_small_square	 	U+25FD
+:black_medium_small_square	black_medium_small_square	 	U+25FE
+:sunny	sunny	 	U+2600
+:cloud	cloud	 	U+2601
+:telephone	telephone	phone	U+260E
+:ballot_box_with_check	ballot_box_with_check	 	U+2611
+:umbrella	umbrella	 	U+2614
+:coffee	coffee	 	U+2615
+:point_up	point_up	 	U+261D
+:relaxed	relaxed	 	U+263A
+:aries	aries	 	U+2648
+:taurus	taurus	 	U+2649
+:gemini	gemini	 	U+264A
+:cancer	cancer	 	U+264B
+:leo	leo	 	U+264C
+:virgo	virgo	 	U+264D
+:libra	libra	 	U+264E
+:scorpius	scorpius	 	U+264F
+:sagittarius	sagittarius	 	U+2650
+:capricorn	capricorn	 	U+2651
+:aquarius	aquarius	 	U+2652
+:pisces	pisces	 	U+2653
+:spades	spades	 	U+2660
+:clubs	clubs	 	U+2663
+:hearts	hearts	 	U+2665
+:diamonds	diamonds	 	U+2666
+:hotsprings	hotsprings	 	U+2668
+:recycle	recycle	 	U+267B
+:wheelchair	wheelchair	 	U+267F
+:anchor	anchor	 	U+2693
+:warning	warning	 	U+26A0
+:zap	zap	 	U+26A1
+:white_circle	white_circle	 	U+26AA
+:black_circle	black_circle	 	U+26AB
+:soccer	soccer	 	U+26BD
+:baseball	baseball	 	U+26BE
+:snowman	snowman	 	U+26C4
+:partly_sunny	partly_sunny	 	U+26C5
+:ophiuchus	ophiuchus	 	U+26CE
+:no_entry	no_entry	 	U+26D4
+:church	church	 	U+26EA
+:fountain	fountain	 	U+26F2
+:golf	golf	 	U+26F3
+:sailboat	sailboat	boat	U+26F5
+:tent	tent	 	U+26FA
+:fuelpump	fuelpump	 	U+26FD
+:scissors	scissors	 	U+2702
+:white_check_mark	white_check_mark	 	U+2705
+:airplane	airplane	 	U+2708
+:envelope	envelope	email	U+2709
+:fist	fist	 	U+270A
+:raised_hand	raised_hand	hand	U+270B
+:v	v	 	U+270C
+:pencil2	pencil2	 	U+270F
+:black_nib	black_nib	 	U+2712
+:heavy_check_mark	heavy_check_mark	 	U+2714
+:heavy_multiplication_x	heavy_multiplication_x	 	U+2716
+:sparkles	sparkles	 	U+2728
+:eight_spoked_asterisk	eight_spoked_asterisk	 	U+2733
+:eight_pointed_black_star	eight_pointed_black_star	 	U+2734
+:snowflake	snowflake	 	U+2744
+:sparkle	sparkle	 	U+2747
+:x	x	 	U+274C
+:negative_squared_cross_mark	negative_squared_cross_mark	 	U+274E
+:question	question	 	U+2753
+:grey_question	grey_question	 	U+2754
+:grey_exclamation	grey_exclamation	 	U+2755
+:dog2	dog2	 	U+1F415
+:kissing	kissing	 	U+1F617
+:helicopter	helicopter	 	U+1F681
+:clock1130	clock1130	 	U+1F566
+:rage4	rage4
+:rage3	rage3
+:rage2	rage2
+:rage1	rage1
+:no_mobile_phones	no_mobile_phones	 	U+1F4F5
+:european_post_office	european_post_office	 	U+1F3E4
+:ox	ox	 	U+1F402
+:mountain_cableway	mountain_cableway	 	U+1F6A0
+:sleeping	sleeping	 	U+1F634
+:cow2	cow2	 	U+1F404
+:godmode	godmode
+:minibus	minibus	 	U+1F690
+:clock730	clock730	 	U+1F562
+:aerial_tramway	aerial_tramway	 	U+1F6A1
+:speaker	speaker	 	U+1F508
+:no_bell	no_bell	 	U+1F515
+:mailbox_with_mail	mailbox_with_mail	 	U+1F4EC
+:no_pedestrians	no_pedestrians	 	U+1F6B7
+:microscope	microscope	 	U+1F52C
+:neckbeard	neckbeard
+:bathtub	bathtub	 	U+1F6C1
+:suspension_railway	suspension_railway	 	U+1F69F
+:trollface	trollface
+:crocodile	crocodile	 	U+1F40A
+:mountain_bicyclist	mountain_bicyclist	 	U+1F6B5
+:waning_crescent_moon	waning_crescent_moon	 	U+1F318
+:monorail	monorail	 	U+1F69D
+:children_crossing	children_crossing	 	U+1F6B8
+:clock230	clock230	 	U+1F55D
+:busts_in_silhouette	busts_in_silhouette	 	U+1F465
+:mailbox_with_no_mail	mailbox_with_no_mail	 	U+1F4ED
+:leopard	leopard	 	U+1F406
+:suspect	suspect
+:deciduous_tree	deciduous_tree	 	U+1F333
+:oncoming_taxi	oncoming_taxi	 	U+1F696
+:fu	fu
+:lemon	lemon	 	U+1F34B
+:mute	mute	 	U+1F507
+:baggage_claim	baggage_claim	 	U+1F6C4
+:twisted_rightwards_arrows	twisted_rightwards_arrows	 	U+1F500
+:feelsgood	feelsgood
+:sun_with_face	sun_with_face	 	U+1F31E
+:trolleybus	trolleybus	 	U+1F68E
+:evergreen_tree	evergreen_tree	 	U+1F332
+:passport_control	passport_control	 	U+1F6C2
+:new_moon_with_face	new_moon_with_face	 	U+1F31A
+:potable_water	potable_water	 	U+1F6B0
+:high_brightness	high_brightness	 	U+1F506
+:low_brightness	low_brightness	 	U+1F505
+:clock530	clock530	 	U+1F560
+:hushed	hushed	 	U+1F62F
+:grimacing	grimacing	 	U+1F62C
+:water_buffalo	water_buffalo	 	U+1F403
+:neutral_face	neutral_face	 	U+1F610
+:clock1230	clock1230	 	U+1F567
