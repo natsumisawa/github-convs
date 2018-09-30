@@ -36,7 +36,7 @@ git-ad-cm(){
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ") 
   echo "\U1F359 git add"
   git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
-    git diff --cached && \
+    git diff --cached | grep -e '^+' -e '^-' && \
     echo "\U1F4DD commit message > " && read MSG && git commit -m $MSG
 }
 
