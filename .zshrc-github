@@ -37,7 +37,7 @@ git-ad-cm(){
   echo "\U1F359 git add"
   git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
     git diff --cached | grep -e '^+' -e '^-' && \
-    echo "\U1F4DD commit message > " && read MSG && git commit -m $MSG
+    echo "\U1F4DD commit message > " && read MSG && echo "\U1F363 git commit" && git commit -m $MSG
 }
 
 # add commit for hrmos
