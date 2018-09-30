@@ -1,5 +1,5 @@
 # checkout local
-git-checkout(){
+git-ch(){
   # instead \r
   LF=$'\\\x0A'
   echo "\U1F34E git fetch"
@@ -8,10 +8,13 @@ git-checkout(){
   TEXT="🌱  CREATE NEW BRANCH"
   BRANCH=$(git branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
+    CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
+    BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | uniq | fzf --prompt="BASE_BRANCH > ")
     echo "\U1F4DD branch name"
     read NEW
-    echo "\U1F337 git checkout"
-    git checkout -b $NEW
+    echo "\U1F34E git checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
+        echo "\U1F34E git pull origin base branch" && git pull origin $BASE_BRANCH && \
+	echo "\U1F337 git checkout new branch" && git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
     git checkout $BRANCH_NAME && echo "\U1F34E git pull from "$BRANCH_NAME && git pull origin $BRANCH_NAME
@@ -19,7 +22,7 @@ git-checkout(){
 }
 
 # checkout including remote branches
-git-checkout-remote(){
+git-ch-remote(){
   echo "\U1F34E git fetch"
   git fetch
   BRANCH=$(git branch -a | grep remotes/origin/SBATS | awk -F/ '{print $3}' | fzf +m --prompt="BRANCHES > ")
@@ -28,19 +31,16 @@ git-checkout-remote(){
 }
 
 # add commit
-git-add-commit(){
+git-ad-cm(){
   LF=$'\\\x0A'
-  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
-  git add $(echo $FILES | awk '{print $2}')
+  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ") 
   echo "\U1F34E git add"
-  echo $FILES
-  echo "\U1F4DD commit message > "  
-  read MSG
-  git commit -m $MSG
+  git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
+    echo "\U1F4DD commit message > " && read MSG && git commit -m $MSG
 }
 
 # add commit for hrmos
-git-hr-add-commit(){
+git-ad-cm-hrmos(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
@@ -53,7 +53,7 @@ git-hr-add-commit(){
 }
 
 # pull from base brach
-git-pull(){
+git-pl(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | uniq | fzf --prompt="BASE_BRANCH > ")
@@ -62,8 +62,13 @@ git-pull(){
 }
 
 # push
-git-push(){
+git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
   echo "\U1F34E ---<<< start git push to origin/"$BRANCH"..." 
   git push origin $BRANCH
 }
+
+# check alias for git
+git-alias(){
+  cat ~/.zshrc | grep "alias" | grep "git " | awk -F"alias " '{print $2}'
+} 
