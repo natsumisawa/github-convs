@@ -13,7 +13,7 @@ git-ch(){
     echo "\U1F4DD branch name"
     read NEW
     echo "\U1F34E git checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
-        echo "\U1F34E git pull origin base branch" && git pull origin $BASE_BRANCH && \
+        echo "start git pull \U1F34E  <-------<<  from origin base branch" && git pull origin $BASE_BRANCH && \
 	echo "\U1F337 git checkout new branch" && git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
@@ -58,14 +58,14 @@ git-pl(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | uniq | fzf --prompt="BASE_BRANCH > ")
-  echo "\U1F34E ---<<< start git pull from "$BASE_BRANCH"..."
+  echo "start git pull \U1F34E  <-------<<  from "$BASE_BRANCH"..."
   git pull origin $BASE_BRANCH
 }
 
 # push
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "start git push  >>------> \U1F34E origin/"$BRANCH"..." 
+  echo "start git push  >>-------> \U1F34E  to origin/"$BRANCH"..." 
   git push origin $BRANCH
 }
 
