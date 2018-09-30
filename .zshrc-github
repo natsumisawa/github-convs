@@ -65,7 +65,7 @@ git-pl(){
 # push
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "\U1F34E ---<<< start git push to origin/"$BRANCH"..." 
+  echo "start git push  >>------> \U1F34E origin/"$BRANCH"..." 
   git push origin $BRANCH
 }
 
