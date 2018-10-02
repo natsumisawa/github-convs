@@ -9,7 +9,7 @@ git-ch(){
   BRANCH=$(git branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
     CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
-    BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | uniq | fzf --prompt="BASE_BRANCH > ")
+    BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
     echo "\U1F4DD branch name"
     read NEW
     echo "\U1F34E git checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
@@ -57,7 +57,7 @@ git-ad-cm-hrmos(){
 git-pl(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
-  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep $CURRENT_BRANCH | awk '/moving from/ {print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | uniq | fzf --prompt="BASE_BRANCH > ")
+  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sort | uniq| fzf --prompt="BASE_BRANCH > ")
   echo "start git pull \U1F34E  <-------<<  from "$BASE_BRANCH"..."
   git pull origin $BASE_BRANCH
 }
