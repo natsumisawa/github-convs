@@ -2,20 +2,19 @@
 git-ch(){
   # instead \r
   LF=$'\\\x0A'
-  echo "\U1F331 ---------------------------------------> git checkout"
   TEXT="+ CREATE NEW BRANCH"
   BRANCH=$(git branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
     CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
     BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
-    echo "\U1F4DD  branch name?"
+    echo "\U1F4DD  new branch name?"
     read NEW
-    echo "\U1F34E ---------------------------------------> git checkout from $BASE_BRANCH" && git checkout $BASE_BRANCH && \
-        echo "\U1F34E ---------------------------------------> git pull from $BASE_BRANCH" && git pull origin $BASE_BRANCH && \
-	echo "\U1F337 git checkout new branch" && git checkout -b $NEW
+    echo "\U1F331 ---------------> checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
+        echo "\U1F331 ----------------------------> pull $BASE_BRANCH" && git pull origin $BASE_BRANCH && \
+	echo "\U1F337 ---------------------------------------> checkout new branch" && git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    git checkout $BRANCH_NAME && echo "\U1F34E ---------------------------------------> git pull from $BRANCH_NAME" && git pull origin $BRANCH_NAME
+    echo "\U1F337 ---------------------------------------> checkout & pull" && git checkout $BRANCH_NAME && git pull origin $BRANCH_NAME
   fi
 }
 
@@ -32,10 +31,11 @@ git-ch-remote(){
 git-ad-cm(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ") 
-  echo "\U1F359 git add"
+  echo "\U1F374 ------------------> add"
   git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
     git diff --cached | grep -e '^+' -e '^-' && \
-    echo "\U1F4DD commit message > " && read MSG && echo "\U1F363 git commit" && git commit -m $MSG
+    echo "\U1F4DD commit message? > " && read MSG && \
+    echo "\U1F35D ---------------------------------------> commit" && git commit -m $MSG
 }
 
 # add commit for hrmos
@@ -43,11 +43,13 @@ git-ad-cm-hrmos(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
-  echo "\U1F34E git add"
+  echo "\U1F374 ------------------> add"
   echo $FILES
   JIRA_NO=$(git symbolic-ref --short HEAD | sed -e "s/\(SBATS-[0-9]*\).*/\1/g")
-  echo "\U1F4DD commit message after "$JIRA_NO" > "
+  git diff --cached | grep -e '^+' -e '^-' && \
+  echo "\U1F4DD commit message after "$JIRA_NO"? > "
   read MSG
+  echo "\U1F35D ---------------------------------------> commit"
   git commit -m $JIRA_NO" "$MSG
 }
 
@@ -55,15 +57,15 @@ git-ad-cm-hrmos(){
 git-pl(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
-  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sort | uniq| fzf --prompt="BASE_BRANCH > ")
-  echo "start git pull \U1F34E  <-------<<  from "$BASE_BRANCH"..."
+  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
+  echo "\U1F31F ---------------------------------------> pull origin/"$BASE_BRANCH"..."
   git pull origin $BASE_BRANCH
 }
 
 # push
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "start git push  >>-------> \U1F34E  to origin/"$BRANCH"..." 
+  echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..." 
   git push origin $BRANCH
 }
 
