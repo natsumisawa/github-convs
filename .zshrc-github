@@ -2,20 +2,19 @@
 git-ch(){
   # instead \r
   LF=$'\\\x0A'
-  echo "\U1F331 ---------------------------------------> git checkout"
   TEXT="+ CREATE NEW BRANCH"
   BRANCH=$(git branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
     CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
     BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
-    echo "\U1F4DD  branch name?"
+    echo "\U1F4DD  new branch name?"
     read NEW
-    echo "\U1F34E ---------------------------------------> git checkout from $BASE_BRANCH" && git checkout $BASE_BRANCH && \
-        echo "\U1F34E ---------------------------------------> git pull from $BASE_BRANCH" && git pull origin $BASE_BRANCH && \
-	echo "\U1F337 git checkout new branch" && git checkout -b $NEW
+    echo "\U1F331 ---------------> checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
+        echo "\U1F331 ----------------------------> pull $BASE_BRANCH" && git pull origin $BASE_BRANCH && \
+	echo "\U1F337 ---------------------------------------> checkout new branch" && git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    git checkout $BRANCH_NAME && echo "\U1F34E ---------------------------------------> git pull from $BRANCH_NAME" && git pull origin $BRANCH_NAME
+    echo "\U1F337 ---------------------------------------> checkout & pull" && git checkout $BRANCH_NAME && git pull origin $BRANCH_NAME
   fi
 }
 
