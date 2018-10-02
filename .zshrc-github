@@ -2,22 +2,20 @@
 git-ch(){
   # instead \r
   LF=$'\\\x0A'
-  echo "\U1F34E git fetch"
-  git fetch
-  echo "\U1F34E git checkout"
-  TEXT="🌱  CREATE NEW BRANCH"
+  echo "\U1F331 ---------------------------------------> git checkout"
+  TEXT="+ CREATE NEW BRANCH"
   BRANCH=$(git branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
-    CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
+    CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
     BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
-    echo "\U1F4DD branch name"
+    echo "\U1F4DD  branch name?"
     read NEW
-    echo "\U1F34E git checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
-        echo "start git pull \U1F34E  <-------<<  from origin base branch" && git pull origin $BASE_BRANCH && \
+    echo "\U1F34E ---------------------------------------> git checkout from $BASE_BRANCH" && git checkout $BASE_BRANCH && \
+        echo "\U1F34E ---------------------------------------> git pull from $BASE_BRANCH" && git pull origin $BASE_BRANCH && \
 	echo "\U1F337 git checkout new branch" && git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    git checkout $BRANCH_NAME && echo "\U1F34E git pull from "$BRANCH_NAME && git pull origin $BRANCH_NAME
+    git checkout $BRANCH_NAME && echo "\U1F34E ---------------------------------------> git pull from $BRANCH_NAME" && git pull origin $BRANCH_NAME
   fi
 }
 
@@ -56,7 +54,7 @@ git-ad-cm-hrmos(){
 # pull from base brach
 git-pl(){
   LF=$'\\\x0A'
-  CURRENT_BRANCH=$(git branch | grep "*" | awk '{print $2}')
+  CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sort | uniq| fzf --prompt="BASE_BRANCH > ")
   echo "start git pull \U1F34E  <-------<<  from "$BASE_BRANCH"..."
   git pull origin $BASE_BRANCH
