@@ -57,7 +57,7 @@ git-ad-cm-hrmos(){
 git-pl(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
-  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sort | uniq| fzf --prompt="BASE_BRANCH > ")
+  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
   echo "\U1F31F ---------------------------------------> pull origin/"$BASE_BRANCH"..."
   git pull origin $BASE_BRANCH
 }
@@ -65,7 +65,7 @@ git-pl(){
 # push
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "\U1F34E ---------------------------------------> push origin/"$BRANCH"..." 
+  echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..." 
   git push origin $BRANCH
 }
 
