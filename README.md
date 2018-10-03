@@ -1,7 +1,10 @@
 # github-convs
 github便利コマンド集
 
-~/.zshrc
-```
-source ~/workspace/github-convs/.zshrc-github
+# Usage
+
+Add line when you use zplug
+
+```.zshrc
+zplug "natsumisawa/github-convs"
 ```
