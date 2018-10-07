@@ -78,3 +78,20 @@ git-alias(){
 emoji-uni(){
   cat emoji-unicode | fzf -m
 }
+
+# open pr (beta)
+git-open-pr() {
+  echo "\U1F4DD your github access token(check repo)?"
+  read TOKEN
+  PRNUM=$(curl -u :$TOKEN https://api.github.com/repos/bizreach/hrmony/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+  open -a Google\ Chrome "https://github.com/bizreach/hrmony/pull/"$PRNUM
+}
+
+# open pr current branch (beta)
+git-open-pr-current-branch() {
+  echo "\U1F4DD your github access token(check repo)?"
+  read TOKEN
+  CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+  PRNUM=$(curl -u :$TOKEN https://api.github.com/repos/bizreach/hrmony/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | grep $CURRENT_BRANCH | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+  open -a Google\ Chrome "https://github.com/bizreach/hrmony/pull/"$PRNUM
+}
