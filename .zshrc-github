@@ -1,5 +1,3 @@
-git-crnt-brnch() { git symbolic-ref --short HEAD }
-
 # checkout local
 git-ch(){
   # instead \r
@@ -7,7 +5,8 @@ git-ch(){
   TEXT="+ CREATE NEW BRANCH"
   BRANCH=$(git branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
-    BASE_BRANCH=$(echo "develop\nmaster\n$git-crnt-brnch" | uniq | fzf --prompt="BASE_BRANCH > ")
+    CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+    BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
     echo "\U1F4DD  new branch name?"
     read NEW
     echo "\U1F331 ---------------> checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
@@ -31,7 +30,7 @@ git-ch-remote(){
 # add commit
 git-ad-cm(){
   LF=$'\\\x0A'
-  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
+  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ") 
   echo "\U1F374 ------------------> add"
   git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
     git diff --cached | grep -e '^+' -e '^-' && \
@@ -57,7 +56,8 @@ git-ad-cm-hrmos(){
 # pull from base brach
 git-pl(){
   LF=$'\\\x0A'
-  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $git-crnt-branch.*" | awk '{print $6}' | sed '1s/^/'"$git-crnt-branch$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
+  CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+  BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
   echo "\U1F31F ---------------------------------------> pull origin/"$BASE_BRANCH"..."
   git pull origin $BASE_BRANCH
 }
@@ -65,14 +65,14 @@ git-pl(){
 # push
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..."
+  echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..." 
   git push origin $BRANCH
 }
 
 # check alias for git
 git-alias(){
   cat ~/.zshrc | grep "alias" | grep "git " | awk -F"alias " '{print $2}'
-}
+} 
 
 # check emoji unicode
 emoji-uni(){
