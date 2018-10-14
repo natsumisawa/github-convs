@@ -78,3 +78,35 @@ git-alias(){
 emoji-uni(){
   cat emoji-unicode | fzf -m
 }
+
+# open pull request
+git-open-pr() {
+  get-github-token
+  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
+  API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
+  PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+  open -a Google\ Chrome $REPO_URL"/pull/"$PR_NUMBER
+}
+
+get-github-token() {
+  if test "${GIT_TOKEN}" = ""; then
+    echo "\U1F4DD personal access token of github? (\U2714 check [repo])"
+    read TOKEN
+    echo -e "\e[31mplease add this text in .zshrc >> \"export GITHUB_TOKEN={personal_access_token?}\"\e[m"
+    echo -e "\e[31mif so you can run git-open-pr without authentication\e[m"
+    export GIT_TOKEN=$TOKEN
+  else
+    echo "success to get your github access token!!"
+  fi
+}
+
+git-open-pr-current-branch() {
+  get-github-token
+  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
+  OWNER=$(echo $REPO_URL | awk -F/ '{print $4}')
+  API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
+  BRANCH=$(git symbolic-ref --short HEAD)
+  ASSEMBLED_URL="${API_URL}/pulls?head=label:${OWNER}:${BRANCH}"
+  PR_NUMBER=$(curl -u :$GIT_TOKEN $ASSEMBLED_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+  open -a Google\ Chrome $REPO_URL"/pull/"$PR_NUMBER
+}
