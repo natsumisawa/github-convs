@@ -90,8 +90,10 @@ git-open-pr() {
 
 get-github-token() {
   if test "${GIT_TOKEN}" = ""; then
-    echo "\U1F4DD  your github access token? (\U2714 check [repo])"
+    echo "\U1F4DD personal access token of github? (\U2714 check [repo])"
     read TOKEN
+    echo -e "\e[31mplease add this text in .zshrc >> \"export GITHUB_TOKEN={personal_access_token?}\"\e[m"
+    echo -e "\e[31mif so you can run git-open-pr without authentication\e[m"
     export GIT_TOKEN=$TOKEN
   else
     echo "success to get your github access token!!"
