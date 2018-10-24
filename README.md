@@ -7,6 +7,8 @@ Add line when you use zplug
 zplug "natsumisawa/github-convs"
 ```
 
+簡単に使うなら、cloneしたものをログインシェルでsourceされるように書くとか、cloneしてきてそのファイルsourceしてみて使ってみるとか
+
 ## git-ch()
 - 📝 select branch
 - git checkout branch
