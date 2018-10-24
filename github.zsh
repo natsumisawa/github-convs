@@ -1,5 +1,5 @@
 # checkout local
-git-ch(){
+git-che(){
   # instead \r
   LF=$'\\\x0A'
   TEXT="+ CREATE NEW BRANCH"
@@ -19,7 +19,7 @@ git-ch(){
 }
 
 # checkout including remote branches
-git-ch-remote(){
+git-che-remote(){
   echo "\U1F34E git fetch"
   git fetch
   BRANCH=$(git branch -a | grep remotes/origin/SBATS | awk -F/ '{print $3}' | fzf +m --prompt="BRANCHES > ")
@@ -28,18 +28,19 @@ git-ch-remote(){
 }
 
 # add commit
-git-ad-cm(){
+git-add-cmt(){
   LF=$'\\\x0A'
-  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ") 
-  echo "\U1F374 ------------------> add"
+  git diff --color-words  
+  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ') 
+  echo "\U1F4DD commit message? > "
+  read MSG
   git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
-    git diff --cached | grep -e '^+' -e '^-' && \
-    echo "\U1F4DD commit message? > " && read MSG && \
+    echo "\U1F374 ------------------> add" && \
     echo "\U1F35D ---------------------------------------> commit" && git commit -m $MSG
 }
 
 # add commit for hrmos
-git-ad-cm-hrmos(){
+git-add-cmt-hrmos(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
@@ -54,7 +55,7 @@ git-ad-cm-hrmos(){
 }
 
 # pull from base brach
-git-pl(){
+git-pll(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
@@ -80,7 +81,7 @@ emoji-uni(){
 }
 
 # open pull request
-git-open-pr() {
+git-opn-pr() {
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
@@ -100,7 +101,7 @@ get-github-token() {
   fi
 }
 
-git-open-pr-current-branch() {
+git-opn-pr-crnt() {
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   OWNER=$(echo $REPO_URL | awk -F/ '{print $4}')
