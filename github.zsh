@@ -30,11 +30,12 @@ git-ch-remote(){
 # add commit
 git-ad-cm(){
   LF=$'\\\x0A'
-  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ") 
-  echo "\U1F374 ------------------> add"
+  git diff --color-words  
+  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ') 
+  echo "\U1F4DD commit message? > "
+  read MSG
   git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
-    git diff --cached | grep -e '^+' -e '^-' && \
-    echo "\U1F4DD commit message? > " && read MSG && \
+    echo "\U1F374 ------------------> add" && \
     echo "\U1F35D ---------------------------------------> commit" && git commit -m $MSG
 }
 
