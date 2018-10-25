@@ -6,6 +6,7 @@ Add line when you use zplug
 ```.zshrc
 zplug "natsumisawa/github-convs"
 ```
+簡単に使うなら、cloneしたものをログインシェルでsourceされるように書くとか、cloneしてきてそのファイルsourceしてみて使ってみるとか
 
 ## ノンコアステップ
 - 作業ブランチからベースブランチにチェックアウト
@@ -14,8 +15,6 @@ zplug "natsumisawa/github-convs"
 
 👇
 -  git-ch()を打って選択するだけ！
-
-簡単に使うなら、cloneしたものをログインシェルでsourceされるように書くとか、cloneしてきてそのファイルsourceしてみて使ってみるとか
 
 ## git-ch()
 - 📝 select branch
