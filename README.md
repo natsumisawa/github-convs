@@ -11,6 +11,7 @@ zplug "natsumisawa/github-convs"
 - 作業ブランチからベースブランチにチェックアウト
 - 最新をpull
 - 新しいブランチを作成
+
 👇
 -  git-ch()を打って選択するだけ！
 
