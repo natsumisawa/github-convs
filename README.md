@@ -6,6 +6,8 @@ Add line when you use zplug
 ```.zshrc
 zplug "natsumisawa/github-convs"
 ```
+
+zshじゃなくても使えるよ
 簡単に使うなら、cloneしたものをログインシェルでsourceされるように書くとか、cloneしてきてそのファイルsourceしてみて使ってみるとか
 
 ## ノンコアステップ
