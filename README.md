@@ -7,6 +7,13 @@ Add line when you use zplug
 zplug "natsumisawa/github-convs"
 ```
 
+## ノンコアステップ
+- 作業ブランチからベースブランチにチェックアウト
+- 最新をpull
+- 新しいブランチを作成
+👇
+-  git-ch()を打って選択するだけ！
+
 簡単に使うなら、cloneしたものをログインシェルでsourceされるように書くとか、cloneしてきてそのファイルsourceしてみて使ってみるとか
 
 ## git-ch()
