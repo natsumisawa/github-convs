@@ -17,8 +17,8 @@ git-che(){
       git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    REMOTE_BRANCH=$(git branch -r | grep $BRANCH_NAME | wc -l)
-    if [ $REMOTE_BRANCH -eq 0 ]; then
+    REMOTE_BRANCH_COUNT=$(git branch -r | grep $BRANCH_NAME | wc -l)
+    if [ $REMOTE_BRANCH_COUNT -eq 0 ]; then
       git checkout $BRANCH_NAME && \
         echo "\U1F337 ---------------------------------------> complite checkout"
     else
