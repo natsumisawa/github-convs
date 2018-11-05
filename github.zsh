@@ -39,6 +39,13 @@ git-add-cmt(){
     echo "\U1F35D ---------------------------------------> commit" && git commit -m $MSG
 }
 
+# add each part and commit
+git-add-cmt-part(){
+  git add -p
+  echo "\U1F4DD commit message? > "
+  read MSG
+}
+
 # add commit for hrmos
 git-add-cmt-hrmos(){
   LF=$'\\\x0A'
