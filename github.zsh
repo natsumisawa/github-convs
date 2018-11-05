@@ -9,12 +9,17 @@ git-che(){
     BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
     echo "\U1F4DD  new branch name?"
     read NEW
-    echo "\U1F331 ---------------> checkout $BASE_BRANCH" && git checkout $BASE_BRANCH && \
-        echo "\U1F331 ----------------------------> pull $BASE_BRANCH" && git pull origin $BASE_BRANCH && \
-	echo "\U1F337 ---------------------------------------> checkout new branch" && git checkout -b $NEW
+    echo "\U1F331 ---------------> checkout $BASE_BRANCH" && \ 
+      git checkout $BASE_BRANCH && \
+      echo "\U1F331 ----------------------------> pull $BASE_BRANCH" && \
+      git pull origin $BASE_BRANCH && \
+      echo "\U1F337 ---------------------------------------> checkout new branch" && \
+      git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    echo "\U1F337 ---------------------------------------> checkout & pull" && git checkout $BRANCH_NAME && git pull origin $BRANCH_NAME
+    echo "\U1F337 ---------------------------------------> checkout & pull" && \
+      git checkout $BRANCH_NAME && \
+      git pull origin $BRANCH_NAME
   fi
 }
 
@@ -34,34 +39,46 @@ git-add-cmt(){
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ') 
   echo "\U1F4DD commit message? > "
   read MSG
-  git add $(echo $FILES | awk '{print $2}') && echo $FILES && \
-    echo "\U1F374 ------------------> add" && \
-    echo "\U1F35D ---------------------------------------> commit" && git commit -m $MSG
+  git add $(echo $FILES | awk '{print $2}') && \
+    echo $FILES && \
+    echo "\U1F374 ------------------> complite add" && \
+    git commit -m $MSG && \
+    echo "\U1F35D --------------------------------------->  complite commit"
 }
 
 # add each part and commit
 git-add-cmt-part(){
   git add -p && \
-  echo "\U1F374 ------------------> add"
+  echo "\U1F374 ------------------> complite add"
   echo "\U1F4DD commit message? > "
   read MSG
   git commit -m $MSG && \
-  echo "\U1F35D ---------------------------------------> commit"
+  echo "\U1F35D ---------------------------------------> complite commit"
 }
 
-# add commit for hrmos
-git-add-cmt-hrmos(){
+# add and commit with jira number
+git-add-cmt-with-jira-num(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
-  echo "\U1F374 ------------------> add"
   echo $FILES
-  JIRA_NO=$(git symbolic-ref --short HEAD | sed -e "s/\(SBATS-[0-9]*\).*/\1/g")
-  git diff --cached | grep -e '^+' -e '^-' && \
-  echo "\U1F4DD commit message after "$JIRA_NO"? > "
+  echo "\U1F374 ------------------> complite add"
+  JIRA_NO=$(git symbolic-ref --short HEAD | sed -e "s/\(SBATS-[0-9]*\).*/\1/g") && \
+    echo "\U1F4DD commit message after "$JIRA_NO"? > "
   read MSG
-  echo "\U1F35D ---------------------------------------> commit"
-  git commit -m $JIRA_NO" "$MSG
+  git commit -m $JIRA_NO" "$MSG && \
+    echo "\U1F35D ---------------------------------------> complite commit"
+}
+
+# add each part and commit with jira number
+git-add-cmt-part-with-jira-number(){
+  git add -p && \
+    echo "\U1F374 ------------------> complite add"
+  echo "\U1F4DD commit message? > "
+  read MSG
+  JIRA_NO=$(git symbolic-ref --short HEAD | sed -e "s/\(SBATS-[0-9]*\).*/\1/g") && \
+    git commit -m $JIRA_NO" "$MSG && \
+  echo "\U1F35D ---------------------------------------> complite commit"
 }
 
 # pull from base brach
