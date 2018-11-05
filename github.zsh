@@ -27,7 +27,7 @@ git-che-remote(){
   git checkout -b $BRANCH origin/$BRANCH
 }
 
-# add commit
+# add and commit
 git-add-cmt(){
   LF=$'\\\x0A'
   git diff --color-words  
@@ -41,9 +41,12 @@ git-add-cmt(){
 
 # add each part and commit
 git-add-cmt-part(){
-  git add -p
+  git add -p && \
+  echo "\U1F374 ------------------> add"
   echo "\U1F4DD commit message? > "
   read MSG
+  git commit -m $MSG && \
+  echo "\U1F35D ---------------------------------------> commit"
 }
 
 # add commit for hrmos
