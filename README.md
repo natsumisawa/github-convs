@@ -18,7 +18,7 @@ zshじゃなくても使えるよ
 👇
 -  git-ch()を打って選択するだけ！
 
-## git-ch()
+## git-che()
 - 📝 select branch
 - git checkout branch
 
@@ -29,30 +29,37 @@ zshじゃなくても使えるよ
 - git pull base branch
 - git checkout -b new branch
 
-## git-ch-remote()
+## git-che-remote()
 - git fetch
 - 📝 select remote branch
 - git checkout -b remote branch
 
-## git-ad-cm()
+## git-add-cmt()
 - 📝 select add files
 - git add select files
 - 📝 write commit msg
 - git commit -m "msg"
 
+## git-add-cmt-part()
+- git add -p
+- 📝 write commit msg
+- git commit -m "msg"
 
-## git-ad-cm-hrmos()
+## git-add-cmt-with-jira-num()
 - 📝 select add files
 - git add select files
 - 📝 write commit msg
 - git commit -m SBATS-XXXX"msg"
 
-## git-pl()
+## git-add-cmt-part-with-jira-number()
+- git-add-cmt-part() + git-add-cmt-with-jira-num()
+
+## git-pll()
 
 ## git-psh()
 
 ## git-alias()
 
-## git-open-pr()
+## git-opn-pr()
 
-## git-open-pr-current-branch()
+## git-opn-pr-crnt()
