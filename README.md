@@ -1,24 +1,18 @@
-# github-convs
-github便利コマンド集
+# WHAT'S github-convs
+write git checkout xx and git pull origin xx and git checkout new and ... is concore step
+if you use this command you can develop Stress-Free by simple step💪
 
-# Usage
+# USAGE
 Add line when you use zplug
 ```.zshrc
 zplug "natsumisawa/github-convs"
 ```
 
-zshじゃなくても使えるよ
-簡単に使うなら、cloneしたものをログインシェルでsourceされるように書くとか、cloneしてきてそのファイルsourceしてみて使ってみるとか
+if you use zplug, clone this repo and source github.zsh
+its better that write this source command to login shell for example .zshrc
 
-## ノンコアステップ
-- 作業ブランチからベースブランチにチェックアウト
-- 最新をpull
-- 新しいブランチを作成
-
-👇
--  git-ch()を打って選択するだけ！
-
-## git-che()
+## COMMAND
+### git-che()
 - 📝 select branch
 - git checkout branch
 
@@ -29,37 +23,37 @@ zshじゃなくても使えるよ
 - git pull base branch
 - git checkout -b new branch
 
-## git-che-remote()
+### git-che-remote()
 - git fetch
 - 📝 select remote branch
 - git checkout -b remote branch
 
-## git-add-cmt()
+### git-add-cmt()
 - 📝 select add files
 - git add select files
 - 📝 write commit msg
 - git commit -m "msg"
 
-## git-add-cmt-part()
+### git-add-cmt-part()
 - git add -p
 - 📝 write commit msg
 - git commit -m "msg"
 
-## git-add-cmt-with-jira-num()
+### git-add-cmt-with-jira-num()
 - 📝 select add files
 - git add select files
 - 📝 write commit msg
 - git commit -m SBATS-XXXX"msg"
 
-## git-add-cmt-part-with-jira-number()
+### git-add-cmt-part-with-jira-number()
 - git-add-cmt-part() + git-add-cmt-with-jira-num()
 
-## git-pll()
+### git-pll()
 
-## git-psh()
+### git-psh()
 
-## git-alias()
+### git-alias()
 
-## git-opn-pr()
+### git-opn-pr()
 
-## git-opn-pr-crnt()
+### git-opn-pr-crnt()
