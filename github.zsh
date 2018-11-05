@@ -14,7 +14,16 @@ git-che(){
 	echo "\U1F337 ---------------------------------------> checkout new branch" && git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    echo "\U1F337 ---------------------------------------> checkout & pull" && git checkout $BRANCH_NAME && git pull origin $BRANCH_NAME
+    REMOTE_BRANCH=$(git branch -r | grep $BRANCH_NAME | wc -l)
+    if [ $REMOTE_BRANCH -eq 0 ]; then
+      git checkout $BRANCH_NAME && \
+        echo "\U1F337 ---------------------------------------> complite checkout"
+    else
+      git checkout $BRANCH_NAME && \
+        echo "\U1F337 ---------------------------------------> complite checkout"
+      git pull origin $BRANCH_NAME && \
+        echo "\U1F337 ---------------------------------------> complite pull"
+    fi
   fi
 }
 
