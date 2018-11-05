@@ -8,7 +8,8 @@ Add line when you use zplug
 zplug "natsumisawa/github-convs"
 ```
 
-if you use zplug, clone this repo and source github.zsh
+if you don't use zplug, clone this repo and source github.zsh
+
 its better that write this source command to login shell for example .zshrc
 
 ## COMMAND
