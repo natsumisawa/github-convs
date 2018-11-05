@@ -10,7 +10,7 @@ zplug "natsumisawa/github-convs"
 
 if you don't use zplug, clone this repo and source github.zsh
 
-its better that write this source command to login shell for example .zshrc
+its better write that source command to login shell for example .zshrc
 
 ## COMMAND
 ### git-che()
