@@ -1,8 +1,8 @@
-# WHAT'S github-convs
-write git checkout xx and git pull origin xx and git checkout new and ... is concore step
-if you use this command you can develop Stress-Free by simple step💪
+## WHAT'S github-convs
+if you use these commands, you can develop Stress-Free by simple step💪
+you write git checkout xx and git pull origin xx and git checkout -b new and ... is concore!!
 
-# USAGE
+## USAGE
 Add line when you use zplug
 ```.zshrc
 zplug "natsumisawa/github-convs"
