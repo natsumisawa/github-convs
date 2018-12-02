@@ -118,9 +118,17 @@ emoji-uni(){
 git-opn-pr() {
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
-  API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
-  PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-  open -a Google\ Chrome $REPO_URL"/pull/"$PR_NUMBER
+  # ssh認証とhttps認証で処理が変わる
+  SSH_COUNT=$($REPO_URL | grep git@ | wc -l)
+  if [ $SSH_COUNT -eq 0 ]; then
+    echo "これはhttps認証です"
+    API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
+    echo $API_URL/pull
+    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+    open -a Google\ Chrome $REPO_URL"/pull/"$PR_NUMBER
+  else
+    echo "これはssh認証です"
+  fi
 }
 
 get-github-token() {
