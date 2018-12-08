@@ -1,6 +1,7 @@
 ## WHAT'S github-convs
-ストレスフリーなgithub使いになれるコマンドだよ
-git checkout xx and git pull origin xx and git checkout -b new and ... 
+ストレスフリーなgithub使いになれるコマンドだよ。
+
+`git checkout xx and git pull origin xx and git checkout -b new and ... `
 is concore!!
 
 ## USAGE
