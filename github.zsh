@@ -119,16 +119,16 @@ git-opn-pr() {
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   # different the way to construct url which ssh or https authentication
-  SSH_COUNT=$(echo $REPO_URL | grep git@ | grep -c '')
-  if [ $SSH_COUNT -eq 1 ] ; then
-    echo "you use ssh auth"
+  IS_SSH_AUTH=$(echo $REPO_URL | grep git@ | grep -c '')
+  if [ $IS_SSH_AUTH -eq 1 ] ; then
+    # ssh
     OWNER_AND_REPO=$(echo $REPO_URL | awk -F: '{print $2}')
     API_URL="https://api.github.com/repos/$OWNER_AND_REPO/pulls"
     echo $API_URL
     PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
     open -a Google\ Chrome "https://github.com/$OWNER_AND_REPO/pull/$PR_NUMBER"
   else
-    echo "you use https auth"
+    # https
     API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
     echo $API_URL"/pull"
     PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
@@ -141,23 +141,23 @@ git-opn-pr-crnt() {
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   # different the way to construct url which ssh or https authentication
-  SSH_COUNT=$(echo $REPO_URL | grep git@ | grep -c '')
-  if [ $SSH_COUNT -eq 1 ] ; then
-    echo "you use ssh auth"
+  IS_SSH_AUTH=$(echo $REPO_URL | grep git@ | grep -c '')
+  if [ $IS_SSH_AUTH -eq 1 ] ; then
+    # ssh
     OWNER_AND_REPO=$(echo $REPO_URL | awk -F: '{print $2}')
     OWNER=$(echo $OWNER_AND_REPO | awk -F/ '{print $1}')
     BRANCH=$(git symbolic-ref --short HEAD)
-    CRNT_BR_API_URL="https://api.github.com/repos/$OWNER_AND_REPO/pulls?head=label:$OWNER:$BRANCH"
-    PR_NUMBER=$(curl -u :$GIT_TOKEN $CRNT_BR_API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-    open -a Google\ Chrome "https://github.com/$OWNER_AND_REPO/pull/$PR_NUMBER"
+    API_URL="https://api.github.com/repos/${OWNER_AND_REPO}/pulls?head=label:${OWNER}:${BRANCH}"
+    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+    open -a Google\ Chrome "https://github.com/${OWNER_AND_REPO}/pull/${PR_NUMBER}"
   else
-    echo "you use https auth"
+    # https
     OWNER=$(echo $REPO_URL | awk -F/ '{print $4}')
-    API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
+    PRE_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
     BRANCH=$(git symbolic-ref --short HEAD)
-    ASSEMBLED_URL="${API_URL}/pulls?head=label:${OWNER}:${BRANCH}"
-    PR_NUMBER=$(curl -u :$GIT_TOKEN $ASSEMBLED_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-    open -a Google\ Chrome $REPO_URL"/pull/"$PR_NUMBER
+    API_URL="${PRE_URL}/pulls?head=label:${OWNER}:${BRANCH}"
+    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+    open -a Google\ Chrome "${REPO_URL}/pull/${PR_NUMBER}"
   fi
 }
 
