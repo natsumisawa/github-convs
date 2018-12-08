@@ -118,13 +118,14 @@ emoji-uni(){
 git-opn-pr() {
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
-  # ssh認証とhttps認証で処理が変わる
+  # different the way to construct url which ssh or https authentication
   SSH_COUNT=$(echo $REPO_URL | grep git@ | grep -c '')
   echo $SSH_COUNT
   if [ $SSH_COUNT -eq 1 ] ; then
-    echo "ssh認証!!"
+    echo "you use ssh auth"
+
   else
-    echo "https認証!!"
+    echo "you use https auth"
     API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
     echo $API_URL"/pull"
     PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
