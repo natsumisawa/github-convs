@@ -150,6 +150,7 @@ get-github-token() {
 }
 
 git-opn-pr-crnt() {
+  # test
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   OWNER=$(echo $REPO_URL | awk -F/ '{print $4}')
