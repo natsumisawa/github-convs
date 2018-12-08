@@ -123,7 +123,11 @@ git-opn-pr() {
   echo $SSH_COUNT
   if [ $SSH_COUNT -eq 1 ] ; then
     echo "you use ssh auth"
-
+    OWNER_AND_REPO=$(echo $REPO_URL | awk -F: '{print $2}')
+    API_URL="https://api.github.com/repos/$OWNER_AND_REPO/pulls"
+    echo $API_URL
+    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+    open -a Google\ Chrome "https://github.com/$OWNER_AND_REPO/pull/$PR_NUMBER"
   else
     echo "you use https auth"
     API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
