@@ -118,9 +118,23 @@ emoji-uni(){
 git-opn-pr() {
   get-github-token
   REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
-  API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
-  PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-  open -a Google\ Chrome $REPO_URL"/pull/"$PR_NUMBER
+  # different the way to construct url which ssh or https authentication
+  SSH_COUNT=$(echo $REPO_URL | grep git@ | grep -c '')
+  echo $SSH_COUNT
+  if [ $SSH_COUNT -eq 1 ] ; then
+    echo "you use ssh auth"
+    OWNER_AND_REPO=$(echo $REPO_URL | awk -F: '{print $2}')
+    API_URL="https://api.github.com/repos/$OWNER_AND_REPO/pulls"
+    echo $API_URL
+    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+    open -a Google\ Chrome "https://github.com/$OWNER_AND_REPO/pull/$PR_NUMBER"
+  else
+    echo "you use https auth"
+    API_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
+    echo $API_URL"/pull"
+    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL/pulls | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | fzf | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
+    open -a Google\ Chrome $REPO_URL"/pull/"$PR_NUMBER
+  fi
 }
 
 get-github-token() {
