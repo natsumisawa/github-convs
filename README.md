@@ -1,6 +1,7 @@
 ## WHAT'S github-convs
-if you use these commands, you can develop Stress-Free by simple step💪
-you write git checkout xx and git pull origin xx and git checkout -b new and ... is concore!!
+ストレスフリーなgithub使いになれるコマンドだよ
+git checkout xx and git pull origin xx and git checkout -b new and ... 
+is concore!!
 
 ## USAGE
 Add line when you use zplug
