@@ -117,10 +117,9 @@ emoji-uni(){
 # open pull request
 git-opn-pr() {
   get-github-token
-  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
+  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   # different the way to construct url which ssh or https authentication
-  IS_SSH_AUTH=$(echo $REPO_URL | grep git@ | grep -c '')
-  if [ $IS_SSH_AUTH -eq 1 ] ; then
+  if echo $REPO_URL | grep git@ ; then
     # ssh
     OWNER_AND_REPO=$(echo $REPO_URL | awk -F: '{print $2}')
     API_URL="https://api.github.com/repos/$OWNER_AND_REPO/pulls"
@@ -139,10 +138,9 @@ git-opn-pr() {
 # open pull request of current branch
 git-opn-pr-crnt() {
   get-github-token
-  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
+  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   # different the way to construct url which ssh or https authentication
-  IS_SSH_AUTH=$(echo $REPO_URL | grep git@ | grep -c '')
-  if [ $IS_SSH_AUTH -eq 1 ] ; then
+  if echo $REPO_URL | grep git@ ; then
     # ssh
     OWNER_AND_REPO=$(echo $REPO_URL | awk -F: '{print $2}')
     OWNER=$(echo $OWNER_AND_REPO | awk -F/ '{print $1}')
