@@ -147,7 +147,11 @@ git-opn-pr-crnt() {
     BRANCH=$(git symbolic-ref --short HEAD)
     API_URL="https://api.github.com/repos/${OWNER_AND_REPO}/pulls?head=label:${OWNER}:${BRANCH}"
     PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-    open -a Google\ Chrome "https://github.com/${OWNER_AND_REPO}/pull/${PR_NUMBER}"
+    if [ -n "$PR_NUMBER" ]; then
+      open -a Google\ Chrome "https://github.com/${OWNER_AND_REPO}/pull/${PR_NUMBER}"
+    else
+      open -a Google\ Chrome "https://github.com/${OWNER_AND_REPO}/pulls"
+    fi
   else
     # https
     OWNER=$(echo $REPO_URL | awk -F/ '{print $4}')
@@ -155,7 +159,11 @@ git-opn-pr-crnt() {
     BRANCH=$(git symbolic-ref --short HEAD)
     API_URL="${PRE_URL}/pulls?head=label:${OWNER}:${BRANCH}"
     PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-    open -a Google\ Chrome "${REPO_URL}/pull/${PR_NUMBER}"
+    if [ -n "$PR_NUMBER" ]; then
+      open -a Google\ Chrome "${REPO_URL}/pull/${PR_NUMBER}"
+    else
+      open -a Google\ Chrome "${REPO_URL}/pulls"
+    fi
   fi
 }
 
