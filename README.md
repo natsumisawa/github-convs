@@ -5,20 +5,20 @@
 ってとってもノンコア。
 
 ## USAGE
-zplugをお使いの方は.zshrcに以下を追記してください。
+add line when you use zplug😃
 ```.zshrc
 zplug "natsumisawa/github-convs"
 ```
-※ちょくちょくメンテしているので定期的なzplugのupdate希望
 
-zplugを使っていない方は、このレポジトリをcloneして、
-`source github.zsh`
-でgithub-convsのコマンドが使えるようになります。
-.bashrcなり.zshrcなり、ログインシェルに `source ?/github.zsh` をかいておくと便利。
+※ please update zplug regularly
 
-※この方法だとupdate情報は追随できない
+if you don't user zplug, clone this repository and
+add line to login shell for example .zshrc .bashrc...😃
+```
+source ~/yout-path/github.zsh
+```
 
-※定期的なpull希望
+※ please pull master regularly
 
 ## COMMAND
 try `git-help`
