@@ -1,4 +1,4 @@
-# checkout local
+# checkout local branch
 git-che(){
   # instead \r
   LF=$'\\\x0A'
@@ -30,7 +30,7 @@ git-che(){
   fi
 }
 
-# checkout including remote branches
+# checkout including remote branch
 git-che-remote(){
   echo "\U1F34E git fetch"
   git fetch
@@ -42,8 +42,8 @@ git-che-remote(){
 # add and commit
 git-add-cmt(){
   LF=$'\\\x0A'
-  git diff --color-words  
-  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ') 
+  git diff --color-words
+  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ')
   echo "\U1F4DD commit message? > "
   read MSG
   git add $(echo $FILES | awk '{print $2}') && \
@@ -97,7 +97,7 @@ git-pll(){
   git pull origin $BASE_BRANCH
 }
 
-# push
+# push to current origin branch
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
   echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..."
@@ -172,4 +172,74 @@ get-github-token() {
   else
     echo "success to get your github access token!!"
   fi
+}
+
+# help
+git-help(){
+  message="
+    \U1F337 git-che()
+    # checkout local branch
+    if you select \$branch
+      git checkout \$branch
+    if you select + CREATE NEW BRANCH
+      write \$new_branch_name
+      select \$base_branch
+      git checkout \$base_branch
+      git pull \$base_branch
+      git checkout -b \$new_branch_name
+
+    \U1F337 git-che-remote()
+    # checkout including remote branch
+    git fetch
+    you select \$remote_branch
+    git checkout -b \$remote_branch
+
+    \U1F337 git-add-cmt()
+    # add and commit
+    you select \$add_files
+    git add \$add_files
+    you write \$commit_msg
+    git commit -m \$commit_msg
+
+    \U1F337 git-add-prt-cmt()
+    # add each part and commit
+    git add -p
+    you write \$commit_msg
+    git commit -m \$commit_msg
+
+    \U1F337 git-add-cmt-w-jira-num()
+    # add and commit with jira number
+    you select \$add_files
+    git add \$add_files
+    you write \$commit_msg
+    git commit -m "SBAST-XXXX\$commit_msg"
+
+    \U1F337 git-add-prt-cmt-w-jira-num()
+    # add each part and commit with jira number
+    git add -p
+    you write \$commit_msg
+    git commit -m  \"SBAST-XXXX\$commit_msg\"
+
+    \U1F337 git-pll()
+    # pull from base brach
+    you select \$base_branch
+    git pull origin \$base_branch
+
+    \U1F337 git-psh()
+    # push to current origin branch
+    git push origin current_branch
+
+    \U1F337 git-alias()
+    # check alias for git
+
+    \U1F337 git-opn-pr()
+    # open pull request
+    you select \$branch
+    you can see \$branch's PR
+
+    \U1F337 git-opn-pr-crnt()
+    # open pull request of current branch
+    you can see current branch's PR
+  "
+  echo $message
 }
