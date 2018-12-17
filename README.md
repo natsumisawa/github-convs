@@ -21,4 +21,5 @@ zplugを使っていない方は、このレポジトリをcloneして、
 ※定期的なpull希望
 
 ## COMMAND
-コマンド詳細は `git-help` で参照できます👍
+try `git-help`
+you can see details👍
