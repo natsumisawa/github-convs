@@ -54,7 +54,7 @@ git-add-cmt(){
 }
 
 # add each part and commit
-git-add-cmt-part(){
+git-add-prt-cmt(){
   git add -p && \
   echo "\U1F374 ------------------> complite add"
   echo "\U1F4DD commit message? > "
@@ -64,7 +64,7 @@ git-add-cmt-part(){
 }
 
 # add and commit with jira number
-git-add-cmt-with-jira-num(){
+git-add-cmt-w-jira-num(){
   LF=$'\\\x0A'
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
   git add $(echo $FILES | awk '{print $2}')
@@ -78,7 +78,7 @@ git-add-cmt-with-jira-num(){
 }
 
 # add each part and commit with jira number
-git-add-cmt-part-with-jira-number(){
+git-add-prt-cmt-w-jira-num(){
   git add -p && \
     echo "\U1F374 ------------------> complite add"
   echo "\U1F4DD commit message? > "
@@ -100,18 +100,13 @@ git-pll(){
 # push
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..." 
+  echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..."
   git push origin $BRANCH
 }
 
 # check alias for git
 git-alias(){
   cat ~/.zshrc | grep "alias" | grep "git " | awk -F"alias " '{print $2}'
-} 
-
-# check emoji unicode
-emoji-uni(){
-  cat emoji-unicode | fzf -m
 }
 
 # open pull request
