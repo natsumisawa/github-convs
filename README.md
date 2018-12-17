@@ -12,7 +12,7 @@ zplug "natsumisawa/github-convs"
 
 ※ please update zplug regularly
 
-if you don't user zplug, clone this repository and
+if you don't use zplug, clone this repository and
 add line to login shell for example .zshrc .bashrc...😃
 ```
 source ~/yout-path/github.zsh
