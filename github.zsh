@@ -3,13 +3,13 @@ git-che(){
   # instead \r
   LF=$'\\\x0A'
   TEXT="+ CREATE NEW BRANCH"
-  BRANCH=$(git branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
+  BRANCH=$(git --no-pager branch -vv | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
     CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
     BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
     echo "\U1F4DD  new branch name?"
     read NEW
-    echo "\U1F331 ---------------> checkout $BASE_BRANCH" && \ 
+    echo "\U1F331 ---------------> checkout $BASE_BRANCH" && \
       git checkout $BASE_BRANCH && \
       echo "\U1F331 ----------------------------> pull $BASE_BRANCH" && \
       git pull origin $BASE_BRANCH && \
