@@ -27,5 +27,4 @@ source ~/your-path/github.zsh
 ※ please pull master regularly
 
 ## COMMAND
-try `git-help`
-you can see details👍
+you can see details if try `git-help`👍
