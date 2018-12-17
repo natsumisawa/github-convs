@@ -1,8 +1,14 @@
 ## WHAT'S github-convs
-ストレスフリーなgithub使いになれるコマンドだよ。
+ストレスフリーなgit使いになれるコマンド達だよ😃
 
-`git checkout xx and git pull origin xx and git checkout -b new and ... `
-ってとってもノンコア。
+```
+$git checkout xx
+$git pull origin xx
+$git checkout -b xx
+PRどこだっけ〜〜
+...
+```
+みたいな時間ってとってもノンコア😇
 
 ## USAGE
 add line when you use zplug😃
@@ -15,7 +21,7 @@ zplug "natsumisawa/github-convs"
 if you don't use zplug, clone this repository and
 add line to .zshrc or .bashrc etc...😃
 ```
-source ~/yout-path/github.zsh
+source ~/your-path/github.zsh
 ```
 
 ※ please pull master regularly
