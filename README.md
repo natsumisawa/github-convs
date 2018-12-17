@@ -5,7 +5,7 @@
 ってとってもノンコア。
 
 ## USAGE
-zplugをお使いの方は、こちらを追記ください。
+zplugをお使いの方は.zshrcに以下を追記してください。
 ```.zshrc
 zplug "natsumisawa/github-convs"
 ```
