@@ -11,7 +11,13 @@ PRどこだっけ〜〜
 みたいな時間ってとってもノンコア😇
 
 ## USAGE
-add line when you use zplug😃
+### install
+please install fzf & Symbola
+fzf: https://github.com/junegunn/fzf
+Symbola: https://qiita.com/nyango/items/671a14ae2834c045fe27
+
+### setup
+please add line when you use zplug😃
 ```.zshrc
 zplug "natsumisawa/github-convs"
 ```
