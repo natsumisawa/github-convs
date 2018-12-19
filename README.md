@@ -13,7 +13,9 @@ PRどこだっけ〜〜
 ## USAGE
 ### install
 please install fzf & Symbola
+
 fzf: https://github.com/junegunn/fzf
+
 Symbola: https://qiita.com/nyango/items/671a14ae2834c045fe27
 
 ### setup
