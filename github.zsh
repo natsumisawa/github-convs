@@ -112,7 +112,7 @@ git-alias(){
 # open pull request
 git-opn-pr() {
   get-github-token
-  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
+  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   # different the way to construct url which ssh or https authentication
   if echo $REPO_URL | grep git@ ; then
     # ssh
@@ -133,7 +133,7 @@ git-opn-pr() {
 # open pull request of current branch
 git-opn-pr-crnt() {
   get-github-token
-  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
+  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   # different the way to construct url which ssh or https authentication
   if echo $REPO_URL | grep git@ ; then
     # ssh
