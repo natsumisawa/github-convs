@@ -3,8 +3,11 @@
 
 ```
 $git checkout xx
-$git pull origin xx
+$git pull xx
 $git checkout -b xx
+$git add fileA
+$git commit -m "msg"
+$git push
 PRどこだっけ〜〜
 ...
 ```
