@@ -13,7 +13,7 @@ PRどこだっけ〜〜
 ```
 みたいな時間ってとってもノンコア😇
 一発コマンドで済まそう。
-https://github.com/natsumisawa/github-convs/issues/63#issue-393470557
+https://user-images.githubusercontent.com/21053284/50346232-11d51300-0575-11e9-9e13-7098c23289b3.gif
 
 ## USAGE
 ### install
