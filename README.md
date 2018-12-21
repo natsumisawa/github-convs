@@ -12,6 +12,8 @@ PRどこだっけ〜〜
 ...
 ```
 みたいな時間ってとってもノンコア😇
+一発コマンドで済まそう。
+https://github.com/natsumisawa/github-convs/issues/63#issue-393470557
 
 ## USAGE
 ### install
