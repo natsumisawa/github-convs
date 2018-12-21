@@ -1,5 +1,5 @@
 ## WHAT'S github-convs
-ストレスフリーなgit使いになれるコマンド達だよ😃
+憧れのストレスフリーなgit使いになれるコマンド達だよ😃
 
 ```
 $git checkout xx
