@@ -46,6 +46,13 @@ git-add-cmt(){
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ')
   echo "\U1F4DD commit message? > "
   read MSG
+  if echo $MSG | grep -e "fix" -e "修正" ; then
+    MSG=":bug: "$MSG
+  elif echo $MSG | grep -e "add" -e "追加" ; then
+    MSG=":sparkles: "$MSG
+  elif echo $MSG | grep -e "refactor" -e "リファクタ" ; then
+    MSG=":recycle: "$MSG
+  fi
   git add $(echo $FILES | awk '{print $2}') && \
     echo $FILES && \
     echo "\U1F374 ------------------> complite add" && \
