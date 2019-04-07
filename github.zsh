@@ -34,7 +34,7 @@ git-che(){
 git-che-remote(){
   echo "\U1F34E git fetch"
   git fetch
-  BRANCH=$(git branch -a | grep remotes/origin | awk -F/ '{print $3}' | fzf +m --prompt="BRANCHES > ")
+  BRANCH=$(git branch -r | awk -F/ '{print $2}' | fzf +m --prompt="BRANCHES > ")
   echo "\U1F34E git checkout"
   git checkout -b $BRANCH origin/$BRANCH
 }
