@@ -6,7 +6,7 @@ git-che(){
   BRANCH=$(git --no-pager branch -vv --sort -authordate | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
     CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
-    BASE_BRANCH=$(echo "develop\nmaster\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
+    BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
     echo "\U1F4DD  new branch name?"
     read NEW
     echo "\U1F331 ---------------> checkout $BASE_BRANCH" && \
@@ -140,33 +140,8 @@ git-opn-pr() {
 # open pull request of current branch
 git-opn-pr-crnt() {
   get-github-token
-  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
-  # different the way to construct url which ssh or https authentication
-  if echo $REPO_URL | grep git@ ; then
-    # ssh
-    OWNER_AND_REPO=$(echo $REPO_URL | awk -F: '{print $2}')
-    OWNER=$(echo $OWNER_AND_REPO | awk -F/ '{print $1}')
-    BRANCH=$(git symbolic-ref --short HEAD)
-    API_URL="https://api.github.com/repos/${OWNER_AND_REPO}/pulls?head=label:${OWNER}:${BRANCH}"
-    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-    if [ -n "$PR_NUMBER" ]; then
-      open -a Google\ Chrome "https://github.com/${OWNER_AND_REPO}/pull/${PR_NUMBER}"
-    else
-      open -a Google\ Chrome "https://github.com/${OWNER_AND_REPO}/pulls"
-    fi
-  else
-    # https
-    OWNER=$(echo $REPO_URL | awk -F/ '{print $4}')
-    PRE_URL=$(echo $REPO_URL | sed -e "s/github.com/api.github.com\/repos/g")
-    BRANCH=$(git symbolic-ref --short HEAD)
-    API_URL="${PRE_URL}/pulls?head=label:${OWNER}:${BRANCH}"
-    PR_NUMBER=$(curl -u :$GIT_TOKEN $API_URL | jq '.[] | .url, .head.ref' | sed -e "N;s/\n/,/g" | awk -F, '{print $1}' | awk -F/ '{print awk $NF}' | tr -d '\"')
-    if [ -n "$PR_NUMBER" ]; then
-      open -a Google\ Chrome "${REPO_URL}/pull/${PR_NUMBER}"
-    else
-      open -a Google\ Chrome "${REPO_URL}/pulls"
-    fi
-  fi
+  BRANCH=$(git symbolic-ref --short HEAD)
+  open -a Google\ Chrome "${REPO_URL}/pull/${BRANCH}"
 }
 
 get-github-token() {
