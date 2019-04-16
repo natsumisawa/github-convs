@@ -140,8 +140,13 @@ git-opn-pr() {
 # open pull request of current branch
 git-opn-pr-crnt() {
   get-github-token
+  REPO_URL=$(git remote -v | awk '{print $2}' | uniq | sed -e "s/.git\$//")
   BRANCH=$(git symbolic-ref --short HEAD)
-  open -a Google\ Chrome "${REPO_URL}/pull/${BRANCH}"
+  if echo $REPO_URL | grep git@ ; then
+    open -a Google\ Chrome "https://github.com/${OWNER_AND_REPO}/pull/${BRANCH}"
+  else
+    open -a Google\ Chrome "${REPO_URL}/pull/${BRANCH}"
+  fi
 }
 
 get-github-token() {
