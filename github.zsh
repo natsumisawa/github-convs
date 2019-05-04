@@ -5,16 +5,7 @@ git-che(){
   TEXT="+ CREATE NEW BRANCH"
   BRANCH=$(git --no-pager branch -vv --sort -authordate | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
-    CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
-    BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
-    echo "\U1F4DD  new branch name?"
-    read NEW
-    echo ":::::::::::::::: checkout\U1F331 ::::::::::::::::" && \
-      git checkout $BASE_BRANCH && \
-      echo "::::::::::::::::   pull\U1F331   ::::::::::::::::" && \
-      git pull origin $BASE_BRANCH && \
-      echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::" && \
-      git checkout -b $NEW
+    checkout-new-branch
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
     git checkout $BRANCH_NAME && \
@@ -31,12 +22,25 @@ pull-remote-branch(){
   fi
 }
 
+checkout-new-branch() {
+  CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+  BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
+  echo "\U1F4DD write new branch name"
+  read NEW
+  echo ":::::::::::::::: checkout\U1F331 ::::::::::::::::" && \
+    git checkout $BASE_BRANCH && \
+    echo "::::::::::::::::   pull\U1F331   ::::::::::::::::" && \
+    git pull origin $BASE_BRANCH && \
+    echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::" && \
+    git checkout -b $NEW
+}
+
 # checkout including remote branch
 git-che-remote(){
-  echo "\U1F34E git fetch"
+  echo "::::::::::::::::  fetch\U1F34E  ::::::::::::::::"
   git fetch
   BRANCH=$(git branch -r | awk -F/ '{print $2}' | fzf +m --prompt="BRANCHES > ")
-  echo "\U1F34E git checkout"
+  echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::"
   git checkout -b $BRANCH origin/$BRANCH
 }
 
@@ -54,20 +58,20 @@ git-add-cmt(){
   read MSG
   git add $(echo $FILES | awk '{print $2}') && \
     echo $FILES && \
-    echo "\U1F374 ------------------> complite add" && \
+    echo "::::::::::::::::  add\U1F374  ::::::::::::::::" && \
     git commit -m $EMOJI+$MSG && \
-    echo "\U1F35D --------------------------------------->  complite commit"
+    echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
 }
 
 # add each part and commit
 git-add-prt-cmt(){
   git add -p && \
-  echo "\U1F374 ------------------> complite add"
+  echo "::::::::::::::::  add\U1F374  ::::::::::::::::"
   EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_COMMIT_MSG_ EMOJI> " | cut -d ' ' -f 1)
   echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
   git commit -m $EMOJI+$MSG && \
-  echo "\U1F35D --------------------------------------->  complite commit"
+  echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
 }
 
 # pull from base brach
@@ -75,7 +79,7 @@ git-pll(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
-  echo "\U1F31F ---------------------------------------> pull origin/"$BASE_BRANCH"..."
+  echo ":::::::::::::::: pull\U1F31F ::::::::::::::::"
   git pull origin $BASE_BRANCH
 }
 
@@ -83,7 +87,7 @@ git-pll(){
 # push to current origin branch
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "\U2728 ---------------------------------------> push origin/"$BRANCH"..."
+  echo ":::::::::::::::: push\U2728 ::::::::::::::::"
   git push origin $BRANCH
 }
 
