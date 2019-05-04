@@ -62,6 +62,7 @@ git-add-cmt(){
     git commit -m $EMOJI$MSG && \
     echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
 }
+
 # add each part and commit
 git-add-prt-cmt(){
   git add -p && \
