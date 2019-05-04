@@ -62,10 +62,11 @@ git-add-cmt(){
 git-add-prt-cmt(){
   git add -p && \
   echo "\U1F374 ------------------> complite add"
-  echo "\U1F4DD commit message? > "
+  EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_COMMIT_MSG_ EMOJI> " | cut -d ' ' -f 1)
+  echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
-  git commit -m $MSG && \
-  echo "\U1F35D ---------------------------------------> complite commit"
+  git commit -m $EMOJI+$MSG && \
+  echo "\U1F35D --------------------------------------->  complite commit"
 }
 
 # add and commit with jira number
