@@ -3,27 +3,19 @@ https://user-images.githubusercontent.com/21053284/50346232-11d51300-0575-11e9-9
 
 ## USAGE
 ### install
-please install fzf & Symbola
-
+以下をinstallしてください。
 fzf: https://github.com/junegunn/fzf
 
 Symbola: https://qiita.com/nyango/items/671a14ae2834c045fe27
 
 ### setup
-please add line when you use zplug😃
+zplugを使っている場合
 ```.zshrc
 zplug "natsumisawa/github-convs"
 ```
-
-※ please update zplug regularly
-
-if you don't use zplug, clone this repository and
-add line to .zshrc or .bashrc etc...😃
+使っていない場合
 ```
 source ~/your-path/github.zsh
 ```
-
-※ please pull master regularly
-
-## COMMAND
-you can see details if you try `git-help`👍
+## COMMANDS
+`git-help`👍
