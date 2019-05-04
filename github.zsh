@@ -39,24 +39,22 @@ git-che-remote(){
   git checkout -b $BRANCH origin/$BRANCH
 }
 
+EMOJI_LIST="🐛 バグ修正 \n👍 機能改善\n✨ 部分的な機能追加\n🎉 盛大に祝うべき大きな機能追加\n♻️ リファクタリング\n\
+🚿 不要な機能・使われなくなった機能の削除\n💚 テストやCIの修正・改善\n👕 Lintエラーの修正やコードスタイルの修正\n🚀 パフォーマンス改善\n\
+🆙 依存パッケージなどのアップデート\n🔒 新機能の公開範囲の制限\n👮 セキュリティ関連の改善"
+
 # add and commit
 git-add-cmt(){
   LF=$'\\\x0A'
   git diff --color-words
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ')
-  echo "\U1F4DD commit message? > "
+  EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_COMMIT_MSG_ EMOJI> " | cut -d ' ' -f 1)
+  echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
-  if echo $MSG | grep -e "fix" -e "修正" ; then
-    MSG=":bug: "$MSG
-  elif echo $MSG | grep -e "add" -e "追加" ; then
-    MSG=":sparkles: "$MSG
-  elif echo $MSG | grep -e "refactor" -e "リファクタ" ; then
-    MSG=":recycle: "$MSG
-  fi
   git add $(echo $FILES | awk '{print $2}') && \
     echo $FILES && \
     echo "\U1F374 ------------------> complite add" && \
-    git commit -m $MSG && \
+    git commit -m $EMOJI+$MSG && \
     echo "\U1F35D --------------------------------------->  complite commit"
 }
 
