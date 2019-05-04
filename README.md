@@ -1,8 +1,7 @@
-## WHAT'S github-convs
+## こんな感じで動きます
 https://user-images.githubusercontent.com/21053284/50346232-11d51300-0575-11e9-9e13-7098c23289b3.gif
 
-## USAGE
-### setup
+## 使い方
 以下を事前にinstallする必要があります。
 
 fzf: https://github.com/junegunn/fzf
@@ -15,8 +14,10 @@ zplug "natsumisawa/github-convs"
 ```
 #### 使っていない場合
 ```
-source ~/your-path/github.zsh
+$ git clone https://github.com/natsumisawa/github-convs
+$ source ~/your-path/github.zsh
 ```
+
 ## COMMANDS
 `git-help`👍
 
