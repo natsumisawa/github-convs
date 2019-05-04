@@ -69,31 +69,6 @@ git-add-prt-cmt(){
   echo "\U1F35D --------------------------------------->  complite commit"
 }
 
-# add and commit with jira number
-git-add-cmt-w-jira-num(){
-  LF=$'\\\x0A'
-  FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > ")
-  git add $(echo $FILES | awk '{print $2}')
-  echo $FILES
-  echo "\U1F374 ------------------> complite add"
-  JIRA_NO=$(git symbolic-ref --short HEAD | sed -e "s/\(SBATS-[0-9]*\).*/\1/g") && \
-    echo "\U1F4DD commit message after "$JIRA_NO"? > "
-  read MSG
-  git commit -m $JIRA_NO" "$MSG && \
-    echo "\U1F35D ---------------------------------------> complite commit"
-}
-
-# add each part and commit with jira number
-git-add-prt-cmt-w-jira-num(){
-  git add -p && \
-    echo "\U1F374 ------------------> complite add"
-  echo "\U1F4DD commit message? > "
-  read MSG
-  JIRA_NO=$(git symbolic-ref --short HEAD | sed -e "s/\(SBATS-[0-9]*\).*/\1/g") && \
-    git commit -m $JIRA_NO" "$MSG && \
-  echo "\U1F35D ---------------------------------------> complite commit"
-}
-
 # pull from base brach
 git-pll(){
   LF=$'\\\x0A'
