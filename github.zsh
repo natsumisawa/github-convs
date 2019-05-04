@@ -41,7 +41,7 @@ git-che-remote(){
   git fetch
   BRANCH=$(git branch -r | awk -F/ '{print $2}' | fzf +m --prompt="BRANCHES > ")
   echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::"
-  git checkout -b $BRANCH origin/$BRANCH
+  git checkout -b $BRANCH origin/$BRANCH || git checkout $BRANCH
 }
 
 EMOJI_LIST="🐛 バグ修正 \n👍 機能改善\n✨ 部分的な機能追加\n🎉 盛大に祝うべき大きな機能追加\n♻️ リファクタリング\n\
