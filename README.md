@@ -21,36 +21,26 @@ source ~/your-path/github.zsh
 `git-help`👍
 
 🌷 git-che()
-チェックアウト時にmasterに戻ってpullして新しいブランチを切って〜という手間を省けます。pullし忘れとか変なブランチから切っちゃった！とか無くなります。
+チェックアウト時にmasterに戻ってpullして新しいブランチを切って〜とかを全部やってくれます。pullし忘れとか変なブランチから切っちゃった！とか無くなります。
 
 🌷 git-che-remote()
 リモートバージョン
 
 🌷 git-add-cmt()
+変更ファイルを選ぶだけで、addしてcommitを自動でやってくれます。プレフィックス絵文字も選べます。
 
 🌷 git-add-prt-cmt()
 git add -pバージョン
 部分ごとに確認してcommitできます。
 
 🌷 git-pll()
-pullすべき
-# pull from base brach
-you select $base_branch
-git pull origin $base_branch
+pullすべきブランチの一覧から選んでpullできます。変なブランチからpullしちゃった！という事故が防げます。
 
 🌷 git-psh()
-# push to current origin branch
-git push origin current_branch
-
-🌷 git-alias()
-# check alias for git
+現在のブランチにpushできます。
 
 🌷 git-opn-pr()
-# open pull request
-you select $branch
-you can see $branch's PR
+PR一覧から見たいPRを選択、ChromeでPRが開きます。
 
 🌷 git-opn-pr-crnt()
-# open pull request of current branch
-you can see current branch's PR
-
+現在のブランチのPRをChromeで開きます。一発で。PRを開く手間を省けます。めっちゃ便利じゃない？
