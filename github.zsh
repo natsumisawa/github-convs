@@ -53,7 +53,7 @@ git-add-cmt(){
   LF=$'\\\x0A'
   git diff --color-words
   FILES=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ')
-  EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_COMMIT_MSG_ EMOJI> " | cut -d ' ' -f 1)
+  EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_PREFIX_EMOJI> " | cut -d ' ' -f 1)
   echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
   git add $(echo $FILES | awk '{print $2}') && \
@@ -67,7 +67,7 @@ git-add-cmt(){
 git-add-prt-cmt(){
   git add -p && \
   echo "::::::::::::::::  add\U1F374  ::::::::::::::::"
-  EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_COMMIT_MSG_ EMOJI> " | cut -d ' ' -f 1)
+  EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_PREFIX_EMOJI> " | cut -d ' ' -f 1)
   echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
   git commit -m $EMOJI$MSG && \
