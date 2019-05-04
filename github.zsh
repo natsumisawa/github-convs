@@ -9,24 +9,25 @@ git-che(){
     BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
     echo "\U1F4DD  new branch name?"
     read NEW
-    echo "\U1F331 ---------------> checkout $BASE_BRANCH" && \
+    echo ":::::::::::::::: checkout\U1F331 ::::::::::::::::" && \
       git checkout $BASE_BRANCH && \
-      echo "\U1F331 ----------------------------> pull $BASE_BRANCH" && \
+      echo "::::::::::::::::   pull\U1F331   ::::::::::::::::" && \
       git pull origin $BASE_BRANCH && \
-      echo "\U1F337 ---------------------------------------> checkout new branch" && \
+      echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::" && \
       git checkout -b $NEW
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    REMOTE_BRANCH_COUNT=$(git branch -r | grep $BRANCH_NAME | wc -l)
-    if [ $REMOTE_BRANCH_COUNT -eq 0 ]; then
-      git checkout $BRANCH_NAME && \
-        echo "\U1F337 ---------------------------------------> complite checkout"
-    else
-      git checkout $BRANCH_NAME && \
-        echo "\U1F337 ---------------------------------------> complite checkout"
-      git pull origin $BRANCH_NAME && \
-        echo "\U1F337 ---------------------------------------> complite pull"
-    fi
+    git checkout $BRANCH_NAME && \
+      echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::"
+    pull-remote-branch $BRANCH_NAME
+  fi
+}
+
+pull-remote-branch(){
+  REMOTE_BRANCH_COUNT=$(git branch -r | grep $1 | wc -l)
+  if [ $REMOTE_BRANCH_COUNT -ne 0 ]; then
+    git pull origin $BRANCH_NAME && \
+      echo ":::::::::::::::: pull\U1F337 ::::::::::::::::"
   fi
 }
 
@@ -78,6 +79,7 @@ git-pll(){
   git pull origin $BASE_BRANCH
 }
 
+# push to current origin branch
 # push to current origin branch
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
