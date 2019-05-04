@@ -59,7 +59,7 @@ git-add-cmt(){
   git add $(echo $FILES | awk '{print $2}') && \
     echo $FILES && \
     echo "::::::::::::::::  add\U1F374  ::::::::::::::::" && \
-    git commit -m $EMOJI+$MSG && \
+    git commit -m $EMOJI$MSG && \
     echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
 }
 
@@ -70,7 +70,7 @@ git-add-prt-cmt(){
   EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_COMMIT_MSG_ EMOJI> " | cut -d ' ' -f 1)
   echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
-  git commit -m $EMOJI+$MSG && \
+  git commit -m $EMOJI$MSG && \
   echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
 }
 
