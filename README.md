@@ -1,6 +1,4 @@
 ## WHAT'S github-convs
-git操作のミスによる事故や手戻り無くしたい😇し、ノンコアなgit操作時間を減らして一刻も早く退社したいという気持ちからできました。
-一発コマンドで済まそう。
 https://user-images.githubusercontent.com/21053284/50346232-11d51300-0575-11e9-9e13-7098c23289b3.gif
 
 ## USAGE
