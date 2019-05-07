@@ -2,7 +2,7 @@
 https://user-images.githubusercontent.com/21053284/50346232-11d51300-0575-11e9-9e13-7098c23289b3.gif
 
 ## 使い方
-以下を事前にinstallする必要があります。
+以下を事前に以下の2つをinstallする必要があります。
 
 fzf: https://github.com/junegunn/fzf
 
