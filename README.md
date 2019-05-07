@@ -10,9 +10,7 @@ Symbola: https://qiita.com/nyango/items/671a14ae2834c045fe27
 
 #### zplugを使っている場合
 ```
-$ vim ~/.zshrc
-zplug "natsumisawa/github-convs"
-$ zplug install
+$ zplug "natsumisawa/github-convs"
 ```
 #### 使っていない場合
 ```
