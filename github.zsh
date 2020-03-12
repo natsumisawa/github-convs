@@ -75,7 +75,7 @@ git-add-prt-cmt(){
 }
 
 git-ign(){
-  FILE=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ')
+  FILE=$(git status --short | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ')
   FILE_NAME=$(echo $FILE | awk '{print $2}')
   git diff $FILE_NAME && echo $FILE_NAME >> .git/info/exclude
 }
