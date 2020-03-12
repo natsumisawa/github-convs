@@ -74,6 +74,17 @@ git-add-prt-cmt(){
   echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
 }
 
+git-ign(){
+  FILE=$(git status --short | sed '1s/^/ALL .'"$LF"'/' | fzf -m --prompt="SELECT_ADD_FILES (multi:tab) > " | tr '\n' ' ')
+  FILE_NAME=$(echo $FILE | awk '{print $2}')
+  git diff $FILE_NAME && echo $FILE_NAME >> .git/info/exclude
+}
+
+git-ign-ls(){
+  cat .git/info/exclude
+  echo "if you wanna cancel ignore-files, rewrite this file. >> .git/info/exclude"
+}
+
 # pull from base brach
 git-pll(){
   LF=$'\\\x0A'
