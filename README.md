@@ -1,5 +1,6 @@
-## こんな感じで動きます
-https://user-images.githubusercontent.com/21053284/50346232-11d51300-0575-11e9-9e13-7098c23289b3.gif
+## 紹介記事
+- https://qiita.com/natsumisawa/items/631afcd394a866b31f71
+- https://qiita.com/natsumisawa/items/a22be92e57d9748b6f66
 
 ## 使い方
 以下を事前に以下の2つをinstallする必要があります。
