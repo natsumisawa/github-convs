@@ -11,13 +11,23 @@ pull-remote-branch(){
 
 checkout-new-branch() {
   CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
-  BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
+  BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE BRANCH > ")
   echo "\U1F4DD write new branch name"
   read NEW
+  if test "${GITHUB_BRANCH_NAME_PREFIX}" = ""; then
+    echo "\e[31mif you set \$GITHUB_BRANCH_NAME_PREFIX, you can select prefix and auto set to the new branch name.\e[m"
+    echo "\e[31m\$echo 'export GITHUB_BRANCH_NAME_PREFIX=\"PREFIX\"' >> ~/.zshrc\e[m"
+  else
+    # ブランチ名のprefixを選べる
+    PREFIX=$(echo $GITHUB_BRANCH_NAME_PREFIX | sed '1s/^/'"none$LF"'/' | fzf --prompt="BRANCH NAME PREFIX > ")
+    if test "${PREFIX}" = "none"; then
+      PREFIX=""
+    fi
+  fi
   try-checkout $BASE_BRANCH
   try-pull $BASE_BRANCH
-  echo "\n\U1F331 checkout ${NEW}"
-  git checkout -b $NEW
+  echo "\n\U1F331 checkout ${PREFIX}${NEW}"
+  git checkout -b $PREFIX$NEW
 }
 
 try-checkout(){
@@ -34,8 +44,8 @@ get-github-token() {
   if test "${GIT_TOKEN}" = ""; then
     echo "\U1F4DD personal access token of github? (\U2714 check [repo])"
     read TOKEN
-    echo -e "\e[31mplease add this text in .zshrc >> \"export GIT_TOKEN={personal_access_token?}\"\e[m"
-    echo -e "\e[31mif so you can run git-open-pr without authentication\e[m"
+    echo "\e[31mplease add this text in .zshrc >> \"export GIT_TOKEN={personal_access_token?}\"\e[m"
+    echo "\e[31mif so you can run git-open-pr without authentication\e[m"
     export GIT_TOKEN=$TOKEN
   else
     echo "success to get your github access token!!"
@@ -216,19 +226,6 @@ git-help(){
     git add -p
     you write \$commit_msg
     git commit -m \$commit_msg
-
-    \U1F337 git-add-cmt-w-jira-num()
-    # add and commit with jira number
-    you select \$add_files
-    git add \$add_files
-    you write \$commit_msg
-    git commit -m "SBAST-XXXX\$commit_msg"
-
-    \U1F337 git-add-prt-cmt-w-jira-num()
-    # add each part and commit with jira number
-    git add -p
-    you write \$commit_msg
-    git commit -m  \"SBAST-XXXX\$commit_msg\"
 
     \U1F337 git-pll()
     # pull from base brach
