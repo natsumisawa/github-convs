@@ -8,8 +8,7 @@ git-che(){
     checkout-new-branch
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    echo "\n:::::::::::::::: checkout\U1F337 ${BRANCH_NAME} ::::::::::::::::"
-    git checkout $BRANCH_NAME
+    try-checkout $BRANCH_NAME
     pull-remote-branch $BRANCH_NAME
   fi
 }
@@ -17,7 +16,7 @@ git-che(){
 pull-remote-branch(){
   REMOTE_BRANCH_COUNT=$(git branch -r | grep $1 | wc -l)
   if [ $REMOTE_BRANCH_COUNT -ne 0 ]; then
-    echo "\n:::::::::::::::: pull\U1F337 ${1} ::::::::::::::::"
+    echo "\n\U2B07 pull ${1}"
     git pull origin $1
   fi
 }
@@ -27,17 +26,25 @@ checkout-new-branch() {
   BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
   echo "\U1F4DD write new branch name"
   read NEW
-  echo "\n:::::::::::::::: checkout\U1F331 ${BASE_BRANCH} ::::::::::::::::"
-  git checkout $BASE_BRANCH
-  echo "\n:::::::::::::::: pull\U1F331 ${BASE_BRANCH} ::::::::::::::::"
-  git pull origin $BASE_BRANCH
-  echo "\n:::::::::::::::: checkout\U1F337 ::::::::::::::::"
+  try-checkout $BASE_BRANCH
+  try-pull $BASE_BRANCH
+  echo "\n\U1F331 checkout ${NEW}"
   git checkout -b $NEW
+}
+
+try-checkout(){
+  echo "\n\U1F331 checkout ${1}"
+  git checkout $1
+}
+
+try-pull(){
+  echo "\n\U2B07 pull ${1}"
+  git pull origin $1
 }
 
 # checkout including remote branch
 git-che-remote(){
-  echo "\n:::::::::::::::: fetch\U1F34E ::::::::::::::::"
+  echo "\n\U1F465 fetch"
   git fetch
   LF=$'\\\x0A'
   TEXT="+ CREATE NEW BRANCH"
@@ -46,8 +53,9 @@ git-che-remote(){
     checkout-new-branch
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    echo "\n:::::::::::::::: checkout\U1F337 origin/${BRANCH_NAME} ::::::::::::::::"
-    git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
+    echo "\n\U1F465 fetch"
+    git fetch origin $BRANCH_NAME
+    try-checkout $BRANCH_NAME
   fi
 }
 
@@ -63,20 +71,20 @@ git-add-cmt(){
   EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_PREFIX_EMOJI> " | cut -d ' ' -f 1)
   echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
-  echo "\n::::::::::::::::  add\U1F374 ${FILES}  ::::::::::::::::"
+  echo "\n\U1F33F add ${FILES}"
   git add $(echo $FILES | awk '{print $2}')
-  echo "\n:::::::::::::::: commit\U1F35D :::::::::::::"
+  echo "\n\U1F490 commit"
   git commit -m $EMOJI$MSG
 }
 
 # add each part and commit
 git-add-prt-cmt(){
-  echo "\n::::::::::::::::  add\U1F374  ::::::::::::::::"
+  echo "\n\U1F33F add"
   git add -p
   EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_PREFIX_EMOJI> " | cut -d ' ' -f 1)
   echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
-  echo "\n:::::::::::::::: commit\U1F35D ::::::::::::::::"
+  echo "\n\U1F490 commit"
   git commit -m $EMOJI$MSG
 }
 
@@ -96,15 +104,14 @@ git-pll(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
-  echo "\n:::::::::::::::: pull\U1F31F ${BASE_BRANCH} ::::::::::::::::"
-  git pull origin $BASE_BRANCH
+  try-pull $BASE_BRANCH
 }
 
 # push to current origin branch
 # push to current origin branch
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo "\n:::::::::::::::: push\U2728 ${BRANCH} ::::::::::::::::"
+  echo "\n\U2B06 push ${BRANCH}"
   git push origin $BRANCH
 }
 
