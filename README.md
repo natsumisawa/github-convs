@@ -3,7 +3,7 @@
 - https://qiita.com/natsumisawa/items/a22be92e57d9748b6f66
 
 ## 使い方
-以下を事前に以下の2つをinstallする必要があります。
+以下の2つをinstallする必要があります。
 
 fzf: https://github.com/junegunn/fzf
 
