@@ -31,6 +31,9 @@ $ source ~/your-path/github.zsh
 🌷 git-add-cmt()
 変更ファイルを選ぶだけで、addしてcommitを自動でやってくれます。プレフィックス絵文字も選べます。
 
+🌷 git-add-cmt-psh()
+プッシュまでしてくれます。
+
 🌷 git-add-prt-cmt()
 git add -pバージョン
 部分ごとに確認してcommitできます。
