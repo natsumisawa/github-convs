@@ -46,21 +46,9 @@ git-che-remote(){
     checkout-new-branch
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    try-checkout-remote $BRANCH_NAME
-    pull-remote-branch $BRANCH_NAME
+    echo "\n:::::::::::::::: checkout\U1F337 ::::::::::::::::"
+    git checkout -b $BRANCH_NAME origin/$BRANCH_NAME || git checkout $BRANCH_NAME
   fi
-}
-
-catch(){
-  echo -e "command failed"
-}
-
-# $1 = ブランチ名
-try-checkout-remote() {
-  echo "\n:::::::::::::::: checkout\U1F337 ::::::::::::::::"
-  git checkout -b $1 origin/$1
-  # エラーがでていたら掴んで強制終了
-  trap catch EXIT
 }
 
 EMOJI_LIST="🐛 バグ修正 \n👍 機能改善\n✨ 部分的な機能追加\n🎉 盛大に祝うべき大きな機能追加\n♻️ リファクタリング\n\
