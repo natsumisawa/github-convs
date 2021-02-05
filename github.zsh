@@ -1,18 +1,6 @@
-# checkout local branch
-git-che(){
-  # instead \r
-  LF=$'\\\x0A'
-  TEXT="+ CREATE NEW BRANCH"
-  BRANCH=$(git --no-pager branch -vv --sort -authordate | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL BRANCHES > ")
-  if [ $BRANCH  = $TEXT ]; then
-    checkout-new-branch
-  else
-    BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
-    try-checkout $BRANCH_NAME
-    pull-remote-branch $BRANCH_NAME
-  fi
-}
-
+# ==========================
+# private funtion
+# ==========================
 pull-remote-branch(){
   REMOTE_BRANCH_COUNT=$(git branch -r | grep $1 | wc -l)
   if [ $REMOTE_BRANCH_COUNT -ne 0 ]; then
@@ -42,6 +30,41 @@ try-pull(){
   git pull origin $1
 }
 
+get-github-token() {
+  if test "${GIT_TOKEN}" = ""; then
+    echo "\U1F4DD personal access token of github? (\U2714 check [repo])"
+    read TOKEN
+    echo -e "\e[31mplease add this text in .zshrc >> \"export GIT_TOKEN={personal_access_token?}\"\e[m"
+    echo -e "\e[31mif so you can run git-open-pr without authentication\e[m"
+    export GIT_TOKEN=$TOKEN
+  else
+    echo "success to get your github access token!!"
+  fi
+}
+
+EMOJI_LIST="🐛 バグ修正 \n👍 機能改善\n✨ 部分的な機能追加\n🎉 盛大に祝うべき大きな機能追加\n♻️ リファクタリング\n\
+🚿 不要な機能・使われなくなった機能の削除\n💚 テストやCIの修正・改善\n👕 Lintエラーの修正やコードスタイルの修正\n🚀 パフォーマンス改善\n\
+🆙 依存パッケージなどのアップデート\n🔒 新機能の公開範囲の制限\n👮 セキュリティ関連の改善"
+
+# ==========================
+# command
+# ==========================
+
+# checkout local branch
+git-che(){
+  # instead \r
+  LF=$'\\\x0A'
+  TEXT="+ CREATE NEW BRANCH"
+  BRANCH=$(git --no-pager branch -vv --sort -authordate | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL BRANCHES > ")
+  if [ $BRANCH  = $TEXT ]; then
+    checkout-new-branch
+  else
+    BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
+    try-checkout $BRANCH_NAME
+    pull-remote-branch $BRANCH_NAME
+  fi
+}
+
 # checkout including remote branch
 git-che-remote(){
   echo "\n\U1F465 fetch"
@@ -58,10 +81,6 @@ git-che-remote(){
     try-checkout $BRANCH_NAME
   fi
 }
-
-EMOJI_LIST="🐛 バグ修正 \n👍 機能改善\n✨ 部分的な機能追加\n🎉 盛大に祝うべき大きな機能追加\n♻️ リファクタリング\n\
-🚿 不要な機能・使われなくなった機能の削除\n💚 テストやCIの修正・改善\n👕 Lintエラーの修正やコードスタイルの修正\n🚀 パフォーマンス改善\n\
-🆙 依存パッケージなどのアップデート\n🔒 新機能の公開範囲の制限\n👮 セキュリティ関連の改善"
 
 # add and commit
 git-add-cmt(){
@@ -108,7 +127,6 @@ git-pll(){
 }
 
 # push to current origin branch
-# push to current origin branch
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
   echo "\n\U2B06 push ${BRANCH}"
@@ -153,17 +171,6 @@ git-opn-pr-crnt() {
   fi
 }
 
-get-github-token() {
-  if test "${GIT_TOKEN}" = ""; then
-    echo "\U1F4DD personal access token of github? (\U2714 check [repo])"
-    read TOKEN
-    echo -e "\e[31mplease add this text in .zshrc >> \"export GIT_TOKEN={personal_access_token?}\"\e[m"
-    echo -e "\e[31mif so you can run git-open-pr without authentication\e[m"
-    export GIT_TOKEN=$TOKEN
-  else
-    echo "success to get your github access token!!"
-  fi
-}
 # help
 git-help(){
   message="
