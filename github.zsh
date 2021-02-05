@@ -96,6 +96,11 @@ git-add-cmt(){
   git commit -m $EMOJI$MSG
 }
 
+# add and commit and push
+git-add-cmt-psh(){
+  git-add-cmt && git-psh
+}
+
 # add each part and commit
 git-add-prt-cmt(){
   echo "\n\U1F33F add"
@@ -197,6 +202,14 @@ git-help(){
     git add \$add_files
     you write \$commit_msg
     git commit -m \$commit_msg
+
+    \U1F337 git-add-cmt-psh()
+    # add and commit and push
+    you select \$add_files
+    git add \$add_files
+    you write \$commit_msg
+    git commit -m \$commit_msg
+    git push origin current_branch
 
     \U1F337 git-add-prt-cmt()
     # add each part and commit
