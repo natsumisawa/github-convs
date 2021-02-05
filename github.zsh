@@ -47,7 +47,7 @@ git-che-remote(){
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
     echo "\n:::::::::::::::: checkout\U1F337 ::::::::::::::::"
-    git checkout -b $BRANCH_NAME origin/$BRANCH_NAME || git checkout $BRANCH_NAME
+    git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
   fi
 }
 
@@ -67,7 +67,7 @@ git-add-cmt(){
     echo $FILES && \
     echo "\n::::::::::::::::  add\U1F374  ::::::::::::::::" && \
     git commit -m $EMOJI$MSG && \
-    echo "\n:::::::::::::::: commit\U1F35D ::::::::::::::::"
+    echo "\n:::::::::::::::: commit\U1F35D :::::::::::::"
 }
 
 # add each part and commit
