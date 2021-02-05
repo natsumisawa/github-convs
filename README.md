@@ -9,7 +9,7 @@ fzf: https://github.com/junegunn/fzf
 
 Symbola: https://qiita.com/nyango/items/671a14ae2834c045fe27
 
-#### zplugを使っている場合
+#### zplugを使っている場合（推奨：zplug updateでアプデ追従できるので）
 ```
 $ zplug "natsumisawa/github-convs"
 ```
