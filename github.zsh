@@ -3,13 +3,13 @@ git-che(){
   # instead \r
   LF=$'\\\x0A'
   TEXT="+ CREATE NEW BRANCH"
-  BRANCH=$(git --no-pager branch -vv --sort -authordate | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL_BRANCHES > ")
+  BRANCH=$(git --no-pager branch -vv --sort -authordate | sed '1s/^/'"$TEXT$LF"'/' | grep -v "^*" | fzf +m --prompt="LOCAL BRANCHES > ")
   if [ $BRANCH  = $TEXT ]; then
     checkout-new-branch
   else
     BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
     git checkout $BRANCH_NAME && \
-      echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::"
+    echo "\n:::::::::::::::: checkout\U1F337 ::::::::::::::::"
     pull-remote-branch $BRANCH_NAME
   fi
 }
@@ -17,8 +17,8 @@ git-che(){
 pull-remote-branch(){
   REMOTE_BRANCH_COUNT=$(git branch -r | grep $1 | wc -l)
   if [ $REMOTE_BRANCH_COUNT -ne 0 ]; then
-    git pull origin $BRANCH_NAME && \
-      echo ":::::::::::::::: pull\U1F337 ::::::::::::::::"
+    echo "\n:::::::::::::::: pull\U1F337 ::::::::::::::::"
+    git pull origin $BRANCH_NAME
   fi
 }
 
@@ -27,21 +27,28 @@ checkout-new-branch() {
   BASE_BRANCH=$(echo "master\n$CURRENT_BRANCH" | uniq | fzf --prompt="BASE_BRANCH > ")
   echo "\U1F4DD write new branch name"
   read NEW
-  echo ":::::::::::::::: checkout\U1F331 ::::::::::::::::" && \
+  echo "\n:::::::::::::::: checkout\U1F331 ::::::::::::::::" && \
     git checkout $BASE_BRANCH && \
-    echo "::::::::::::::::   pull\U1F331   ::::::::::::::::" && \
+    echo "\n::::::::::::::::   pull\U1F331   ::::::::::::::::" && \
     git pull origin $BASE_BRANCH && \
-    echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::" && \
+    echo "\n:::::::::::::::: checkout\U1F337 ::::::::::::::::" && \
     git checkout -b $NEW
 }
 
 # checkout including remote branch
 git-che-remote(){
-  echo "::::::::::::::::  fetch\U1F34E  ::::::::::::::::"
+  echo "\n::::::::::::::::  fetch\U1F34E  ::::::::::::::::"
   git fetch
-  BRANCH=$(git branch -r | awk -F/ '{print $2}' | fzf +m --prompt="BRANCHES > ")
-  echo ":::::::::::::::: checkout\U1F337 ::::::::::::::::"
-  git checkout -b $BRANCH origin/$BRANCH || git checkout $BRANCH
+  LF=$'\\\x0A'
+  TEXT="+ CREATE NEW BRANCH"
+  BRANCH=$(git branch -r | awk -F/ '{print $2}' | sed '1s/^/'"$TEXT$LF"'/' | fzf +m --prompt="REMOTE BRANCHES > ")
+  if [ $BRANCH  = $TEXT ]; then
+    checkout-new-branch
+  else
+    BRANCH_NAME=$(echo $BRANCH | awk '{print $1}')
+    echo "\n:::::::::::::::: checkout\U1F337 ::::::::::::::::"
+    git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
+  fi
 }
 
 EMOJI_LIST="🐛 バグ修正 \n👍 機能改善\n✨ 部分的な機能追加\n🎉 盛大に祝うべき大きな機能追加\n♻️ リファクタリング\n\
@@ -58,20 +65,20 @@ git-add-cmt(){
   read MSG
   git add $(echo $FILES | awk '{print $2}') && \
     echo $FILES && \
-    echo "::::::::::::::::  add\U1F374  ::::::::::::::::" && \
+    echo "\n::::::::::::::::  add\U1F374  ::::::::::::::::" && \
     git commit -m $EMOJI$MSG && \
-    echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
+    echo "\n:::::::::::::::: commit\U1F35D :::::::::::::"
 }
 
 # add each part and commit
 git-add-prt-cmt(){
   git add -p && \
-  echo "::::::::::::::::  add\U1F374  ::::::::::::::::"
+  echo "\n::::::::::::::::  add\U1F374  ::::::::::::::::"
   EMOJI=$(echo $EMOJI_LIST | fzf -m --prompt="SELECT_PREFIX_EMOJI> " | cut -d ' ' -f 1)
   echo "\U1F4DD write commit message (quit ctr+C) >"
   read MSG
   git commit -m $EMOJI$MSG && \
-  echo ":::::::::::::::: commit\U1F35D ::::::::::::::::"
+  echo "\n:::::::::::::::: commit\U1F35D ::::::::::::::::"
 }
 
 git-ign(){
@@ -90,7 +97,7 @@ git-pll(){
   LF=$'\\\x0A'
   CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
   BASE_BRANCH=$(git --no-pager reflog | awk '$3 == "checkout:"' | grep ".*to $CURRENT_BRANCH.*" | awk '{print $6}' | sed '1s/^/'"$CURRENT_BRANCH$LF"'/' | sort | uniq | fzf --prompt="BASE_BRANCH > ")
-  echo ":::::::::::::::: pull\U1F31F ::::::::::::::::"
+  echo "\n:::::::::::::::: pull\U1F31F ::::::::::::::::"
   git pull origin $BASE_BRANCH
 }
 
@@ -98,7 +105,7 @@ git-pll(){
 # push to current origin branch
 git-psh(){
   BRANCH=$(git branch -vv | grep "*" | awk '{print $2}')
-  echo ":::::::::::::::: push\U2728 ::::::::::::::::"
+  echo "\n:::::::::::::::: push\U2728 ::::::::::::::::"
   git push origin $BRANCH
 }
 
